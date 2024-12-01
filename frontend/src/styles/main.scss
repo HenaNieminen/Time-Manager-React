@@ -1,8 +1,14 @@
+/*This scss file is used to compile the final CSS file.
+scss or SASS works as an extension of the CSS language.
+It allows classes to extend like in normal programming
+languages and allows easier work over selectors and such*/
 body {
     background-color: silver;
 }
 
 h1,
+h2,
+h3,
 p {
-    font-family: 'Roboto';
+    font-family: "Roboto";
 }
