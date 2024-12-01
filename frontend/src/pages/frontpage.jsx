@@ -3,7 +3,7 @@ import "../styles/main.css"
 
 const FrontPage = () => {
     return (
-        <h1>Let's try this out</h1>
+        <h1>Hello. This is still under construction</h1>
     );
 }
 
