@@ -4,22 +4,22 @@ import FrontPage from './pages/frontpage.jsx';
 import InfoPage from './pages/infopage.jsx';
 import SettingsPage from './pages/settingspage.jsx';
 
-const router = createBrowserRouter(
+const router = createBrowserRouter([
     {
         path: '/',
         element: <FrontPage />,
-        errorElement: <NotFoundPage />
+        errorElement: <NotFoundPage />,
     },
     {
         path: '/info',
         element: <InfoPage />,
-        errorElement: <NotFoundPage />
+        errorElement: <NotFoundPage />,
     },
     {
         path: '/settings',
         element: <SettingsPage />,
-        errorElement: <NotFoundPage />
-    }
-);
+        errorElement: <NotFoundPage />,
+    },
+]);
 
 export default router;
