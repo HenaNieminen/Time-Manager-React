@@ -7,7 +7,6 @@ const fetchTasks = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
-        throw error;
     }
 }
 
@@ -18,7 +17,6 @@ const fetchTags = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        throw error;
     }
 }
 
@@ -29,7 +27,6 @@ const fetchTimes = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        throw error;
     }
 }
 
