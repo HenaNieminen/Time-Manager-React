@@ -1,8 +1,12 @@
 body {
-  background-color: silver;
+    background-color: silver;
 }
 
 h1,
+h2,
+h3,
 p {
-  font-family: "Roboto";
-}/*# sourceMappingURL=main.css.map */
+    font-family: "Roboto";
+}
+
+/*# sourceMappingURL=main.css.map */
