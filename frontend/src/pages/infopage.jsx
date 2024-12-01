@@ -12,7 +12,9 @@ const InfoPage = () => {
             <div>
                 <h3>Käytetyt materiaalit</h3>
                 <p>Työssä ei ole tähän asti käytetty mitään joka olisi
-                    lisenssinalaista
+                    lisenssinalaista. CSS:ssän sijaan ollaan käytetty SASSIA,
+                    joka on ekstensio CSS kielestä ja helpottaa luokkien ja selektoreiden
+                    käyttöä
                 </p>
                 <p>Tekoäly työkaluja (Github Co-Pilot) on lähinnä käytetty pieninen ongelmien
                     ratkaisuun jos ei ole nettihauilla löytynyt suoraviivaista
