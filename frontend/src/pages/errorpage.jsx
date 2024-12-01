@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import errorImage from '../images/404.png';
+import "../styles/main.css"
 
 export default function NotFoundPage() {
     //Returns an error element for the router
