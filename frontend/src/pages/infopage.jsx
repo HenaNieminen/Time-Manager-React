@@ -1,4 +1,6 @@
 import "../styles/main.css"
+import { Link } from 'react-router-dom';
+
 const InfoPage = () => {
 
     return (
@@ -22,8 +24,9 @@ const InfoPage = () => {
                 </p>
             </div>
         </div>
+        <Link to="/">Go back</Link>
     </>
     );
-}
+};
 
 export default InfoPage;
