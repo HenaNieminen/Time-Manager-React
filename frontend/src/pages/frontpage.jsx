@@ -28,11 +28,7 @@ const FrontPage = () => {
         <h1>Hello. This is still under construction</h1>
         <Link to="/settings">Go to settings page</Link>
         <Link to="/info">Go to info page</Link>
-        {tasks.map(task => (
-            <div key={task.id}>
-                <h2>{task.name}</h2>
-            </div>
-        ))}
+        
         </>
     );
 };
