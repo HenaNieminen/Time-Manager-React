@@ -1,8 +1,38 @@
+/*This scss file is used to compile the final CSS file.
+scss or SASS works as an extension of the CSS language.
+It allows classes to extend like in normal programming
+languages and allows easier work over selectors and such*/
 body {
     background-color: silver;
 }
 
 h1,
+h2,
+h3,
 p {
-    font-family: 'Roboto';
+    font-family: "Roboto";
+}
+
+.navbar {}
+
+.navbutton {}
+
+.task-window {
+    max-height: 400px;
+    width: 300px;
+    overflow-y: scroll;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.window-row {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.insert-row {
+    display: flex;
+    flex-direction: row;
 }
