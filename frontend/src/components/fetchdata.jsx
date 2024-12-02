@@ -7,6 +7,7 @@ const fetchTasks = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
+        return [];
     }
 }
 
@@ -14,9 +15,10 @@ const fetchTags = async () => {
     try {
         //Fetch all tags from the database
         const response = await axios.get('http://127.0.0.1:3010/tags');
-        return response.data;
+        return response.data
     } catch (error) {
         console.error('Error fetching tags:', error);
+        return [];
     }
 }
 
@@ -27,6 +29,7 @@ const fetchTimes = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
+        return [];
     }
 }
 
