@@ -2,35 +2,35 @@ import axios from 'axios';
 
 const fetchTasks = async () => {
     try {
-        //Fetch all tasks from the database
+        // Fetch all tasks from the database
         const response = await axios.get('http://127.0.0.1:3010/tasks');
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
-        //returns an empty array if fails, giving no data
-        return [];
+        throw new Error("Server is probably down or fucky wucky");
+        // Returns an empty array if fails, giving no data
     }
 }
 
 const fetchTags = async () => {
     try {
-        //Fetch all tags from the database
+        // Fetch all tags from the database
         const response = await axios.get('http://127.0.0.1:3010/tags');
-        return response.data
+        return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        return [];
+        throw new Error("Server is probably down or fucky wucky");
     }
 }
 
 const fetchTimes = async () => {
     try {
-        //Fetch all timestamps from the database
+        // Fetch all timestamps from the database
         const response = await axios.get('http://127.0.0.1:3010/timestamps');
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        return [];
+        throw new Error("Server is probably down or fucky wucky");
     }
 }
 
