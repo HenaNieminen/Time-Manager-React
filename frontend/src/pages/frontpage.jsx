@@ -9,13 +9,6 @@ const FrontPage = () => {
     let [tags, setTags] = useState([]);
     let [times, setTimes] = useState([]);
 
-    //Add a new task with separate components and then call fetchData to update
-    const addTask = async () => {
-        const name = document.getElementById('taskName').value;
-        const additional_data = document.getElementById('additionalData').value;
-        await createNewTask(name, additional_data);
-        await fetchData();
-    };
     //Fetch all data from backend with separate components
     const fetchData = async () => {
         const fetchedTasks = await fetchTasks();
@@ -27,6 +20,14 @@ const FrontPage = () => {
         const fetchedTimes = await fetchTimes();
         setTimes(fetchedTimes);
     }
+
+    //Add a new task with separate components and then call fetchData to update
+    const addTask = async () => {
+        const name = document.getElementById('taskName').value;
+        const additional_data = document.getElementById('additionalData').value;
+        await createNewTask(name, additional_data);
+        await fetchData();
+    };
 
     useEffect(() => {
         fetchData();

@@ -7,6 +7,7 @@ const fetchTasks = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
+        //returns an empty array if fails, giving no data
         return [];
     }
 }
