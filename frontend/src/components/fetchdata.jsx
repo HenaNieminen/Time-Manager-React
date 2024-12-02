@@ -7,7 +7,7 @@ const fetchTasks = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tasks:', error);
-        throw new Error("Server is probably down or fucky wucky");
+        throw new Error(error);
         // Returns an empty array if fails, giving no data
     }
 }
@@ -19,7 +19,7 @@ const fetchTags = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        throw new Error("Server is probably down or fucky wucky");
+        throw new Error(error);
     }
 }
 
@@ -30,7 +30,7 @@ const fetchTimes = async () => {
         return response.data;
     } catch (error) {
         console.error('Error fetching tags:', error);
-        throw new Error("Server is probably down or fucky wucky");
+        throw new Error(error);
     }
 }
 

@@ -12,11 +12,10 @@ const FrontPage = () => {
     const [times, setTimes] = useState([]);
     const [taskName, setTaskName] = useState('');
     const [additionalData, setAdditionalData] = useState('');
-    const syncFailure = () => toast("Error syncing data!");
+    const syncFailure = (error) => toast(`Error syncing data! Error: ${error}`);
 
     //Fetch all data from backend with separate components
     const fetchData = async () => {
-
         try {
             const fetchedTasks = await fetchTasks();
             setTasks(fetchedTasks);
@@ -27,7 +26,7 @@ const FrontPage = () => {
             const fetchedTimes = await fetchTimes();
             setTimes(fetchedTimes);
         } catch (error) {
-            syncFailure();
+            syncFailure(error);
         }
     }
 
