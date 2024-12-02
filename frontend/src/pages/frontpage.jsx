@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchTasks, fetchTags, fetchTimes } from '../components/fetchdata.jsx';
 import { createNewTask } from '../components/createnewtask.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FrontPage = () => {
     let [tasks, setTasks] = useState([]);
@@ -68,6 +70,7 @@ const FrontPage = () => {
             <div>
             {/*Send the input field to setNewTask if name is at least included */}
                 <button onClick={addTask}>Add Task</button>
+                <ToastContainer />
             </div>
         </div>
         </>
