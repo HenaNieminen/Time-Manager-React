@@ -3,29 +3,37 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchTasks, fetchTags, fetchTimes } from '../components/fetchdata.jsx';
 import { createNewTask } from '../components/createnewtask.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FrontPage = () => {
-    let [tasks, setTasks] = useState([]);
-    let [tags, setTags] = useState([]);
-    let [times, setTimes] = useState([]);
+    const [tasks, setTasks] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [times, setTimes] = useState([]);
+    const [taskName, setTaskName] = useState('');
+    const [additionalData, setAdditionalData] = useState('');
+    const syncFailure = () => toast("Error syncing data!");
 
     //Fetch all data from backend with separate components
     const fetchData = async () => {
-        const fetchedTasks = await fetchTasks();
-        setTasks(fetchedTasks);
 
-        const fetchedTags = await fetchTags();
-        setTags(fetchedTags);
+        try {
+            const fetchedTasks = await fetchTasks();
+            setTasks(fetchedTasks);
 
-        const fetchedTimes = await fetchTimes();
-        setTimes(fetchedTimes);
+            const fetchedTags = await fetchTags();
+            setTags(fetchedTags);
+
+            const fetchedTimes = await fetchTimes();
+            setTimes(fetchedTimes);
+        } catch (error) {
+            syncFailure();
+        }
     }
 
     //Add a new task with separate components and then call fetchData to update
     const addTask = async () => {
-        const name = document.getElementById('taskName').value;
-        const additional_data = document.getElementById('additionalData').value;
-        await createNewTask(name, additional_data);
+        await createNewTask(taskName, additionalData);
         await fetchData();
     };
 
@@ -36,6 +44,7 @@ const FrontPage = () => {
 
     return (
         <>
+        <ToastContainer />
         <h1>Hello. This is still under construction</h1>
         <Link to="/settings">Go to settings page</Link>
         <Link to="/info">Go to info page</Link>
@@ -59,11 +68,13 @@ const FrontPage = () => {
                 type="text"
                 placeholder="Task Name"
                 id="taskName"
+                onChange={(e) => setTaskName(e.target.value)}
             />
             <input
                 type="text"
                 placeholder="Additional Data"
                 id="additionalData"
+                onChange={(e) => setAdditionalData(e.target.value)}
             />
             <div>
             {/*Send the input field to setNewTask if name is at least included */}

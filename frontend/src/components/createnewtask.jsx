@@ -1,21 +1,25 @@
-import { postTasks } from './postdata.jsx'
+import { postTasks } from './postfunctions.jsx'
+import { toast } from 'react-toastify';
 
+const successNote = () => toast("Task added successfully!");
+const failureNote = () => toast("Failure adding task. Check your connection or our server status!");
+const missingName = () => toast("Name is required for the task");
 
 const createNewTask = async (name, additional_data) => {
     if (name) {
         const task = {
             name,
-            additional_data, // Include additional_data if provided
+            additional_data,
         };
         try {
-            await postTasks(task); // Call the API function to post the task
-            alert('Task added successfully!');
+            await postTasks(task);
+            successNote();
         } catch (error) {
             console.error('Failed to add task:', error);
-            alert('Error adding the task.');
+            failureNote();
         }
     } else {
-        alert('A name is required for the task');
+        missingName();
     }
 }
 
