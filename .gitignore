@@ -133,4 +133,4 @@ out
 # config files
 config.js
 
-.db
+*.db
