@@ -69,7 +69,7 @@ const TaskWindow = () => {
                             <li key={index}>
                                 <p>ID: <strong>{task.id}</strong></p>
                                 <p>Name: <strong>{task.name}</strong></p>
-                                <p>Additional Data: <strong>{task.tagNames}</strong></p>
+                                <p>Tags: <strong>{task.tagNames}</strong></p>
                             </li>
                         ))}
                     </ul>
@@ -85,7 +85,7 @@ const TaskWindow = () => {
             />
             <input
                 type="text"
-                placeholder="Additional Data"
+                placeholder="Tags"
                 id="additionalData"
                 onChange={(e) => setInsertedTags(e.target.value)}
             />
