@@ -5,11 +5,11 @@ const successNote = () => toast("Task added successfully!");
 const failureNote = () => toast("Failure adding task. Check your connection or our server status!");
 const missingName = () => toast("Name is required for the task");
 
-const createNewTask = async (name, additional_data) => {
+const createNewTask = async (name, tags) => {
     if (name) {
         const task = {
             name,
-            additional_data,
+            tags,
         };
         try {
             await postTasks(task);
