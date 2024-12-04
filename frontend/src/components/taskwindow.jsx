@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import { fetchTasks, fetchTags, fetchTimes } from './fetchdata.jsx';
-import { createNewTask } from './createnewtask.jsx'
+import backFunc from './backendfunc.jsx';
 import { toast } from 'react-toastify';
+import { extractTagNames } from './extractTagNames';
 import "../styles/main.css"
 
+/* The basic idea inside the task window is to have some functionality here
+but then transfer the brunt of the logic into other files and then just call them from here.
+The functions here then can easily refresh the data with the fetchData function when they are
+done and no need for complicated passes and stuff*/
 const TaskWindow = () => {
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
@@ -11,50 +15,48 @@ const TaskWindow = () => {
     const [insertedTask, setInsertedTasks] = useState('');
     const [insertedTags, setInsertedTags] = useState('');
 
-    const extractTagNames = (tasks, tags) => {
-        for (let task of tasks) {
-            const tagIds = task.tags.split(',').map((id) => parseInt(id));
-            let tagNames = [];
 
-            for (let id of tagIds) {
-                for (let tag of tags) {
-                    if (tag.id === id) {
-                        tagNames.push(tag.name);
-                        break;
-                    }
-                }
-            }
-
-            task.tagNames = tagNames.join(', ');
-        }
-
-        return tasks;
-    };
 
     const addTask = async () => {
-        await createNewTask(insertedTask, insertedTags);
+        //function to add tasks utilizing other components
+        await backFunc.createNewTask(insertedTask, insertedTags);
         await fetchData();
+        //Error handling has also been ousted to them so this is pretty simple
     };
 
-    const syncFailure = (error) => toast(`Error syncing data! Error: ${error}`);
+    const deleteTask = async () => {
+    }
+
+    const editTaskName = async () => {
+
+    }
+
+    const editTaskTags = async () => {
+
+    }
+
+    //If the backend fails put out this toast notification
+    const syncFailure = (error) => toast.error(`Error syncing data! Error: ${error.message}}`);
 
     const fetchData = async () => {
         try {
-            const fetchedTasks = await fetchTasks();
-            const fetchedTags = await fetchTags();
-            const fetchedTimes = await fetchTimes();
-
+            const fetchedTasks = await backFunc.fetchTasks();
+            const fetchedTags = await backFunc.fetchTags();
+            const fetchedTimes = await backFunc.fetchTimes();
+            //Fetch everything and then insert tagnames into tasks
             const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
 
             setTasks(tasksWithTags);
             setTags(fetchedTags);
             setTimes(fetchedTimes);
         } catch (error) {
+            //Throw the toast with the error
             syncFailure(error);
         }
     }
 
     useEffect(() => {
+        //Fetch all data when component mounts
         fetchData();
     }, []);
 
