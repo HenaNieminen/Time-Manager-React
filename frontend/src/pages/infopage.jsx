@@ -16,7 +16,8 @@ const InfoPage = () => {
                 <p>Työssä ei ole tähän asti käytetty mitään joka olisi
                     lisenssinalaista. CSS:ssän sijaan ollaan käytetty SASSIA,
                     joka on ekstensio CSS kielestä ja helpottaa luokkien ja selektoreiden
-                    käyttöä
+                    käyttöä. Myös reactin muita kirjastoja kuten toastify, router, jne. on
+                    käytetty. Suunnitelmana on myös lokalisoida (i8n)
                 </p>
                 <p>Tekoäly työkaluja (Github Co-Pilot) on lähinnä käytetty pieninen ongelmien
                     ratkaisuun jos ei ole nettihauilla löytynyt suoraviivaista
