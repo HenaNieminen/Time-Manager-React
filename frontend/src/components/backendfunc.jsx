@@ -72,7 +72,6 @@ const success = () => toast.success(`Task deleted!`);
 
 const removeTask = async (taskId) => {
     try {
-        // Remove the task with the given taskId from the database
         await axios.delete(`http://127.0.0.1:3010/tasks/${taskId}`);
         success();
     } catch (error) {
@@ -81,4 +80,19 @@ const removeTask = async (taskId) => {
     }
 }
 
-export default { postTasks, postTags, postTimes, removeTask, fetchTasks, fetchTags, fetchTimes };
+const editTask = async (taskId, updatedTask, updatedTags = null) => {
+    try {
+        await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
+
+        if (updatedTags) {
+            await axios.put(`http://127.0.0.1:3010/tags/${taskId}`, updatedTags);
+        }
+
+        toast.success('Task and tags updated successfully!');
+    } catch (error) {
+        console.error('Error editing task or tags:', error.message);
+        throw new Error(error.message);
+    }
+}
+
+export default { postTasks, postTags, postTimes, removeTask, fetchTasks, fetchTags, fetchTimes, editTask };
