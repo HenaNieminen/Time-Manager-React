@@ -1,9 +1,6 @@
 import { toast } from 'react-toastify';
 import backFunc from './backendfunc.jsx';
 
-const successNote = (type) => toast.success(`${type} added successfully!`);
-const failureNote = (type, message) => toast.error(`Failure adding ${type}. Error: ${message} !`);
-const missingName = (type) => toast(`${type} name is required`);
 
 const createNewTask = async (name, tags) => {
     if (name) {
@@ -13,28 +10,41 @@ const createNewTask = async (name, tags) => {
         };
         try {
             await backFunc.postTasks(task);
-            successNote('Task');
+            toast.success("Created a new task");
         } catch (error) {
             console.error('Failed to add task:', error.message);
-            failureNote('task', error.message);
+            toast.failure("Failed to create a new task:", error.message);
         }
     } else {
-        missingName('Task');
+        toast.failure("Name is required for the task");
     }
 }
 
-const createNewTag = async (tag) => {
-    if (tag) {
+const createNewTag = async (name) => {
+    if (name) {
+        const tag = {
+            name,
+        };
         try {
             await backFunc.postTags(tag);
-            successNote('Tag');
+            toast.success("Created a new tag");
         } catch (error) {
             console.error('Failed to add tag:', error.message);
-            failureNote('tag', error.message);
+            toast.failure("Failed to create a new tag", error.message);
         }
     } else {
-        missingName('Tag');
+        toast.failure("Name is required for the tag");
     }
 }
 
-export { createNewTask, createNewTag };
+const checkDuplicates = (state, newTaskName) => {
+    //Goes through the state where tasks are stored and checks if there is a duplicate name
+    for (const task of state) {
+        if (task.name === newTaskName) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export { createNewTask, createNewTag, checkDuplicates };
