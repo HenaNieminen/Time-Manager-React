@@ -37,10 +37,10 @@ const createNewTag = async (name) => {
     }
 }
 
-const checkDuplicates = (state, newTaskName) => {
+const checkDuplicates = (state, selected) => {
     //Goes through the state where tasks are stored and checks if there is a duplicate name
-    for (const task of state) {
-        if (task.name === newTaskName) {
+    for (const item of state) {
+        if (item.name === selected) {
             return true;
         }
     }

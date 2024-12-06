@@ -32,6 +32,11 @@ const TaskWindow = () => {
     };
 
     const addTag = async () => {
+        const isDuplicate = checkDuplicates(tags, addedTag);
+        if (isDuplicate) {
+            toast.error('Tag already exists!');
+            return;
+        }
         await createNewTag(addedTag);
         await fetchData();
     };
@@ -94,6 +99,7 @@ const TaskWindow = () => {
             return prevTags;
         });
     };
+
 
     useEffect(() => {
         fetchData();

@@ -8,8 +8,8 @@ const ShowInsertedTags = ({ state, setState, }) => {
                 <button
                     key={index}
                     onClick={() => {
-                        const updatedTags = state.filter((t) => t !== tag); // Remove the clicked tag
-                        setState(updatedTags); // Update the state
+                        const updatedTags = state.filter((t) => t !== tag);
+                        setState(updatedTags);
                     }}
                 >
                     {tag.name}
