@@ -144,7 +144,8 @@ const TaskWindow = () => {
                                     <div>
                                         <p>Name: <strong>{task.name}</strong></p>
                                         <p>Tags: <strong>{task.tagNames}</strong></p>
-                                        <button onClick={() => setEditMode(task.id)}>Edit</button>
+                                        {/*This is most likely where the problem lies*/}
+                                        <button onClick={() => { setEditMode(task.id); setEditedTask(task.name); setEditedTags(extractSingularTags(task)) }}>Edit</button>
                                         <button onClick={() => deleteTask(task.id)}>Delete</button>
                                     </div>
                                 )}
