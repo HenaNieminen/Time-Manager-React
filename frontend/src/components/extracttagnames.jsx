@@ -21,4 +21,12 @@ const extractTagNames = (tasks, tags) => {
     return tasks;
 };
 
-export { extractTagNames };
+const extractSingularTags = (tags, allTags) => {
+    return tags
+        .split(',')
+        .map((id) => parseInt(id.trim(), 10))
+        .map((id) => allTags.find((tag) => tag.id === id))
+        .filter((tag) => tag);
+};
+
+export { extractTagNames, extractSingularTags };

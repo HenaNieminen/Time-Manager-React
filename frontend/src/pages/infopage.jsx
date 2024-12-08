@@ -6,22 +6,22 @@ const InfoPage = () => {
     return (
     <>
         <div>
-            <h1>Tietoja sovelluksesta</h1>
-            <h2>Tekijä: Henri Nieminen</h2>
+            <h1>About the Application</h1>
+            <h2>Author: Henri Nieminen</h2>
             <div>
-                <h3>Käyttöohjeet:</h3>
+                <h3>Instructions:</h3>
             </div>
             <div>
-                <h3>Käytetyt materiaalit</h3>
-                <p>Työssä ei ole tähän asti käytetty mitään joka olisi
-                    lisenssinalaista. CSS:ssän sijaan ollaan käytetty SASSIA,
-                    joka on ekstensio CSS kielestä ja helpottaa luokkien ja selektoreiden
-                    käyttöä. Myös reactin muita kirjastoja kuten toastify, router, jne. on
-                    käytetty. Suunnitelmana on myös lokalisoida (i8n)
+                <h3>Materials Used</h3>
+                <p>So far, no licensed materials have been used in this work.
+                    Instead of CSS, I have used SASS, which is an extension of the CSS language
+                    and makes it easier to use classes and selectors. Other React libraries such as
+                    toastify, router, etc. have also been used. The plan is also to localize (i18n).
                 </p>
-                <p>Tekoäly työkaluja (Github Co-Pilot) on lähinnä käytetty pieninen ongelmien
-                    ratkaisuun jos ei ole nettihauilla löytynyt suoraviivaista
-                    vastausta.
+                <p>AI tools (GitHub Copilot) have mainly been used to solve small problems
+                    when a straightforward answer could not be found through web searches.
+                    Casmoden Solutions on youtube is also a good source for learning stuff.
+                    <a href="https://www.youtube.com/@cosdensolutions" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@cosdensolutions</a>
                 </p>
             </div>
         </div>

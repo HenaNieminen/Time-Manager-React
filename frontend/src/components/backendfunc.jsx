@@ -68,31 +68,50 @@ const postTimes = async (time) => {
 }
 
 //Remove functions
-const success = () => toast.success(`Task deleted!`);
-
 const removeTask = async (taskId) => {
     try {
         await axios.delete(`http://127.0.0.1:3010/tasks/${taskId}`);
-        success();
+        toast.success('Task removed successfully!');
     } catch (error) {
         console.error('Error removing task:', error.message);
         throw new Error(error.message);
     }
 }
 
-const editTask = async (taskId, updatedTask, updatedTags = null) => {
+const removeTag = async (tagId) => {
+    try {
+        await axios.delete(`http://127.0.0.1:3010/tasks/${tagId}`);
+        toast.success('Tag removed successfully!');
+    } catch (error) {
+        console.error('Error removing tag:', error.message);
+        throw new Error(error.message);
+    }
+}
+
+//Edit functions
+
+const editTask = async (taskId, updatedTask) => {
     try {
         await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
-
-        if (updatedTags) {
-            await axios.put(`http://127.0.0.1:3010/tags/${taskId}`, updatedTags);
-        }
-
         toast.success('Task and tags updated successfully!');
+    } catch (error) {
+        console.error('Error editing task or tags:', error.message);
+        throw new Error(error.message);
+    }
+};
+
+const editTag = async (tagId, updatedTag) => {
+    try {
+        const tagUpdate = {
+            tagId,
+            name: updatedTag
+        };
+        await axios.put(`http://127.0.0.1:3010/tags/${tagId}`, tagUpdate);
+        toast.success('Tag updated successfully!');
     } catch (error) {
         console.error('Error editing task or tags:', error.message);
         throw new Error(error.message);
     }
 }
 
-export default { postTasks, postTags, postTimes, removeTask, fetchTasks, fetchTags, fetchTimes, editTask };
+export default { postTasks, postTags, postTimes, removeTask, removeTag, fetchTasks, fetchTags, fetchTimes, editTask };

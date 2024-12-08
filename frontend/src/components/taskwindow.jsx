@@ -1,19 +1,43 @@
 import { useState, useEffect } from 'react';
 import backFunc from './backendfunc.jsx';
 import { toast } from 'react-toastify';
-import { extractTagNames } from './extractTagNames';
-import { createNewTask } from './createnewtask.jsx';
+import { extractSingularTags, extractTagNames } from './extractTagNames';
+import { ShowInsertedTags } from './showinsertedtags.jsx';
+import { createNewTask, createNewTag, checkDuplicates } from './createnew.jsx';
 import "../styles/main.css";
 
 const TaskWindow = () => {
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
-    const [times, setTimes] = useState([]);
+    //const [times, setTimes] = useState([]);
+
     const [insertedTask, setInsertedTasks] = useState('');
-    const [insertedTags, setInsertedTags] = useState('');
-    //Nasty duplication. Will need a single function to put it all togheter
+    const [insertedTaskTag, setInsertedTaskTag] = useState([]);
+
+    const [addedTag, setAddedTag] = useState('');
+
+    const [editMode, setEditMode] = useState(null);
+    const [editedTask, setEditedTask] = useState('');
+    const [editedTags, setEditedTags] = useState([]);
+
     const addTask = async () => {
-        await createNewTask(insertedTask, insertedTags);
+        const isDuplicate = checkDuplicates(tasks, insertedTask);
+        if (isDuplicate) {
+            toast.error('Task already exists!');
+            return;
+        }
+        const tagIds = insertedTaskTag.map((tag) => tag.id);
+        await createNewTask(insertedTask, tagIds);
+        await fetchData();
+    };
+
+    const addTag = async () => {
+        const isDuplicate = checkDuplicates(tags, addedTag);
+        if (isDuplicate) {
+            toast.error('Tag already exists!');
+            return;
+        }
+        await createNewTag(addedTag);
         await fetchData();
     };
 
@@ -22,27 +46,61 @@ const TaskWindow = () => {
         await fetchData();
     };
 
-    const adjustTask = async (id, task, tags) => {
-        await backFunc.editTask(id, task, tags)
+    const deleteTag = async (id) => {
+        await backFunc.removeTag(id);
         await fetchData();
-    }
+    };
 
-    const syncFailure = (error) => toast.error(`Error syncing data! Error: ${error.message}}`);
+    const adjustTask = async (id) => {
+        const originalTask = tasks.find(task => task.id === id);
+        if (originalTask.name !== editedTask) {
+            const isDuplicate = await checkDuplicates(tasks, editedTask);
+            if (isDuplicate) {
+                toast.error('Task already exists!');
+                return;
+            }
+        }
+        const tagId = editedTags.map((tag) => tag.id);
+        await backFunc.editTask(id, { name: editedTask, tags: tagId });
+        await fetchData();
+        setEditMode(null);
+    };
+
+    const syncFailure = (error) => toast.error(`Error syncing data! Error: ${error.message}`);
 
     const fetchData = async () => {
         try {
             const fetchedTasks = await backFunc.fetchTasks();
             const fetchedTags = await backFunc.fetchTags();
-            const fetchedTimes = await backFunc.fetchTimes();
+            //const fetchedTimes = await backFunc.fetchTimes();
             const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
 
             setTasks(tasksWithTags);
             setTags(fetchedTags);
-            setTimes(fetchedTimes);
+            //setTimes(fetchedTimes);
         } catch (error) {
             syncFailure(error);
         }
     };
+
+    const tagButtonClickForAdding = (tag) => {
+        setInsertedTaskTag((prevTags) => {
+            if (!prevTags.includes(tag)) {
+                return [...prevTags, tag];
+            }
+            return prevTags;
+        });
+    };
+
+    const tagButtonClickForEditing = (tag) => {
+        setEditedTags((prevTags) => {
+            if (!prevTags.includes(tag)) {
+                return [...prevTags, tag];
+            }
+            return prevTags;
+        });
+    };
+
 
     useEffect(() => {
         fetchData();
@@ -56,33 +114,86 @@ const TaskWindow = () => {
                         <h3>Tasks</h3>
                         {tasks.map((task, index) => (
                             <li key={index}>
-                                <p>Name: <strong>{task.name}</strong></p>
-                                <p>Tags: <strong>{task.tagNames}</strong></p>
-                                {/* Delete Button */}
-                                <button onClick={() => deleteTask(task.id)}>Delete Task</button>
+                                {editMode === task.id ? (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            defaultValue={task.name}
+                                            onChange={(e) => setEditedTask(e.target.value)}
+                                        />
+                                        {/*This needs to take all the previous tags taken into attention*/}
+                                        <ShowInsertedTags state={editedTags} setState={setEditedTags} />
+                                        <div>
+                                            {tags.map((tag) => (
+                                                <button
+                                                    key={tag.id}
+                                                    onClick={() =>
+                                                        tagButtonClickForEditing(tag)
+                                                    }
+                                                >
+                                                    {tag.name}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        {/*Doesnt work yet */}
+                                        <button onClick={() => adjustTask(task.id)}>
+                                            Save
+                                        </button>
+                                        <button onClick={() => setEditMode(null)}>Cancel</button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <p>Name: <strong>{task.name}</strong></p>
+                                        <p>Tags: <strong>{task.tagNames}</strong></p>
+                                        {/*This is most likely where the problem lies*/}
+                                        <button onClick={() =>
+                                            { setEditMode(task.id);
+                                            setEditedTask(task.name);
+                                            setEditedTags(extractSingularTags(task.tags, tags))
+                                            }}>Edit</button>
+                                        <button onClick={() => deleteTask(task.id)}>Delete</button>
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
-
             <div>
                 <input
                     type="text"
                     placeholder="Task Name"
                     id="taskName"
+                    value={insertedTask}
                     onChange={(e) => setInsertedTasks(e.target.value)}
                 />
-                <input
-                    type="text"
-                    placeholder="Tags"
-                    id="additionalData"
-                    onChange={(e) => setInsertedTags(e.target.value)}
-                />
                 <div>
-                    <button onClick={addTask}>Add Task</button>
+                    <ShowInsertedTags state={insertedTaskTag} setState={setInsertedTaskTag} />
                 </div>
+                    {tags.map((tag) => (
+                        <button
+                            key={tag.id}
+                            onClick={() => tagButtonClickForAdding(tag)}
+                        >
+                            {tag.name}
+                        </button>
+                    ))}
+                </div>
+            <div>
+                <button onClick={() =>
+                { setInsertedTaskTag([]);
+                setInsertedTasks('');
+                addTask();
+                }}>Add Task</button>
             </div>
+            <input
+                type="text"
+                placeholder="Tag name"
+                id="tagName"
+                value={addedTag}
+                onChange={(e) => setAddedTag(e.target.value)}
+            />
+            <button onClick={() => { addTag(); setAddedTag('') }}>Add Tag </button>
         </>
     );
 };
