@@ -37,7 +37,7 @@ const TaskWindow = () => {
             setTags(fetchedTags);
             //setTimes(fetchedTimes);
         } catch (error) {
-            syncFailure(error);
+            toast.error("Failed syncing data:", error.message);
         }
         //I doubt this is even a good implementation of the darned thing
     }, []);
@@ -87,8 +87,6 @@ const TaskWindow = () => {
         await fetchData();
         setEditMode(null);
     };
-
-    const syncFailure = (error) => toast.error(`Error syncing data! Error: ${error.message}`);
 
     const tagButtonClickForAdding = (tag) => {
         setInsertedTaskTag((prevTags) => {
