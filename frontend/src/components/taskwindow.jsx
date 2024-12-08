@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import backFunc from './backendfunc.jsx';
 import { toast } from 'react-toastify';
-import { extractTagNames } from './extractTagNames';
+import { extractSingularTags, extractTagNames } from './extractTagNames';
 import { ShowInsertedTags } from './showinsertedtags.jsx';
 import { createNewTask, createNewTag, checkDuplicates } from './createnew.jsx';
 import "../styles/main.css";
@@ -51,16 +51,17 @@ const TaskWindow = () => {
         await fetchData();
     };
 
-    const adjustTask = async (id, updatedTaskName, updatedTags) => {
+    const adjustTask = async (id) => {
         const originalTask = tasks.find(task => task.id === id);
-        if (originalTask.name !== updatedTaskName) {
-            const isDuplicate = await checkDuplicates(tasks, updatedTaskName);
+        if (originalTask.name !== editedTask) {
+            const isDuplicate = await checkDuplicates(tasks, editedTask);
             if (isDuplicate) {
                 toast.error('Task already exists!');
                 return;
             }
         }
-        await backFunc.editTask(id, { name: updatedTaskName }, updatedTags);
+        const tagId = editedTags.map((tag) => tag.id);
+        await backFunc.editTask(id, { name: editedTask, tags: tagId });
         await fetchData();
         setEditMode(null);
     };
@@ -127,7 +128,7 @@ const TaskWindow = () => {
                                                 <button
                                                     key={tag.id}
                                                     onClick={() =>
-                                                        tagButtonClickForEditing(tag.name, setEditedTags)
+                                                        tagButtonClickForEditing(tag)
                                                     }
                                                 >
                                                     {tag.name}
@@ -135,7 +136,7 @@ const TaskWindow = () => {
                                             ))}
                                         </div>
                                         {/*Doesnt work yet */}
-                                        <button onClick={() => adjustTask(task.id, editedTask, editedTags)}>
+                                        <button onClick={() => adjustTask(task.id)}>
                                             Save
                                         </button>
                                         <button onClick={() => setEditMode(null)}>Cancel</button>
@@ -145,7 +146,11 @@ const TaskWindow = () => {
                                         <p>Name: <strong>{task.name}</strong></p>
                                         <p>Tags: <strong>{task.tagNames}</strong></p>
                                         {/*This is most likely where the problem lies*/}
-                                        <button onClick={() => { setEditMode(task.id); setEditedTask(task.name); setEditedTags(extractSingularTags(task)) }}>Edit</button>
+                                        <button onClick={() =>
+                                            { setEditMode(task.id);
+                                            setEditedTask(task.name);
+                                            setEditedTags(extractSingularTags(task.tags, tags))
+                                            }}>Edit</button>
                                         <button onClick={() => deleteTask(task.id)}>Delete</button>
                                     </div>
                                 )}
@@ -175,7 +180,11 @@ const TaskWindow = () => {
                     ))}
                 </div>
             <div>
-                <button onClick={() => { addTask(); setInsertedTaskTag([]); setInsertedTasks(''); }}>Add Task</button>
+                <button onClick={() =>
+                { setInsertedTaskTag([]);
+                setInsertedTasks('');
+                addTask();
+                }}>Add Task</button>
             </div>
             <input
                 type="text"

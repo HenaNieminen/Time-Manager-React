@@ -13,10 +13,10 @@ const createNewTask = async (name, tags) => {
             toast.success("Created a new task");
         } catch (error) {
             console.error('Failed to add task:', error.message);
-            toast.failure("Failed to create a new task:", error.message);
+            toast.error("Failed to create a new task:", error.message);
         }
     } else {
-        toast.failure("Name is required for the task");
+        toast.error("Name is required for the task");
     }
 }
 
@@ -30,10 +30,10 @@ const createNewTag = async (name) => {
             toast.success("Created a new tag");
         } catch (error) {
             console.error('Failed to add tag:', error.message);
-            toast.failure("Failed to create a new tag", error.message);
+            toast.error("Failed to create a new tag", error.message);
         }
     } else {
-        toast.failure("Name is required for the tag");
+        toast.error("Name is required for the tag");
     }
 }
 

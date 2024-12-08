@@ -90,13 +90,9 @@ const removeTag = async (tagId) => {
 
 //Edit functions
 
-const editTask = async (taskId, updatedTask, updatedTags) => {
+const editTask = async (taskId, updatedTask) => {
     try {
-        const combinedUpdate = {
-            ...updatedTask,
-            tags: updatedTags || ""
-        };
-        await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, combinedUpdate);
+        await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
         toast.success('Task and tags updated successfully!');
     } catch (error) {
         console.error('Error editing task or tags:', error.message);
