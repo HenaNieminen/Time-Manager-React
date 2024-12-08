@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import backFunc from './backendfunc.jsx';
 import { toast } from 'react-toastify';
 import { extractSingularTags, extractTagNames } from './extractTagNames';
@@ -7,6 +7,7 @@ import { createNewTask, createNewTag, checkDuplicates } from './createnew.jsx';
 import "../styles/main.css";
 
 const TaskWindow = () => {
+    //Aaand here is my useState hell
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
     //const [times, setTimes] = useState([]);
@@ -19,6 +20,27 @@ const TaskWindow = () => {
     const [editMode, setEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
+
+    //This is something ESLINT and Co-pilot were constantly complaining about
+    const fetchData = useCallback(async () => {
+        /*This uses the useCallback library from React and is wrapped into the
+        useEffect or componentdidmount*/
+        try {
+            /*Honestly I have no clue whatsoever how can this change or improve my code
+            so I am gonna leave it and hope it doesnt cause any headaches*/
+            const fetchedTasks = await backFunc.fetchTasks();
+            const fetchedTags = await backFunc.fetchTags();
+            //const fetchedTimes = await backFunc.fetchTimes();
+            const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
+
+            setTasks(tasksWithTags);
+            setTags(fetchedTags);
+            //setTimes(fetchedTimes);
+        } catch (error) {
+            syncFailure(error);
+        }
+        //I doubt this is even a good implementation of the darned thing
+    }, []);
 
     const addTask = async () => {
         const isDuplicate = checkDuplicates(tasks, insertedTask);
@@ -68,21 +90,6 @@ const TaskWindow = () => {
 
     const syncFailure = (error) => toast.error(`Error syncing data! Error: ${error.message}`);
 
-    const fetchData = async () => {
-        try {
-            const fetchedTasks = await backFunc.fetchTasks();
-            const fetchedTags = await backFunc.fetchTags();
-            //const fetchedTimes = await backFunc.fetchTimes();
-            const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
-
-            setTasks(tasksWithTags);
-            setTags(fetchedTags);
-            //setTimes(fetchedTimes);
-        } catch (error) {
-            syncFailure(error);
-        }
-    };
-
     const tagButtonClickForAdding = (tag) => {
         setInsertedTaskTag((prevTags) => {
             if (!prevTags.includes(tag)) {
@@ -104,7 +111,7 @@ const TaskWindow = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     return (
         <>
