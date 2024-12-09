@@ -96,7 +96,7 @@ const removeTask = async (taskId) => {
 
 const removeTag = async (tagId) => {
     try {
-        await axios.delete(`http://127.0.0.1:3010/tasks/${tagId}`);
+        await axios.delete(`http://127.0.0.1:3010/tags/${tagId}`);
         toast.success('Tag removed successfully!');
     } catch (error) {
         console.error('Error removing tag:', error.message);
@@ -130,4 +130,15 @@ const editTag = async (tagId, updatedTag) => {
     }
 }
 
-export { postTasks, postTags, postTimes, removeTask, removeTag, fetchTasks, fetchTags, fetchTimes, editTask, editTag, fetchData };
+export { postTasks,
+        postTags,
+        postTimes,
+        removeTask,
+        removeTag,
+        fetchTasks,
+        fetchTags,
+        fetchTimes,
+        editTask,
+        editTag,
+        fetchData };
+//11 FUNCTIONS!!!

@@ -1,6 +1,6 @@
 import { ShowInsertedTags } from "./showinsertedtags";
 import { checkDuplicates, createNewTask } from "./createnew";
-import { fetchData } from "./backendfunc";
+import { fetchData, removeTag } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
@@ -17,6 +17,11 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
         }
         const tagIds = insertedTaskTag.map((tag) => tag.id);
         await createNewTask(insertedTask, tagIds);
+        await fetchData(setTasks, setTags);
+    };
+
+    const deleteTag = async (id) => {
+        await removeTag(id);
         await fetchData(setTasks, setTags);
     };
 
@@ -45,12 +50,12 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                 />
             </div>
             {tags.map((tag) => (
-                <button
-                    key={tag.id}
-                    onClick={() => tagButtonClickForAdding(tag)}
-                >
-                    {tag.name}
-                </button>
+                <div key={tag.id}>
+                    <button onClick={() => tagButtonClickForAdding(tag)}>
+                        {tag.name}
+                    </button>
+                    <button onClick={() => deleteTag(tag.id)}>x</button>
+                </div>
             ))}
             <div>
                 <button onClick={() => {
