@@ -47,7 +47,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                                 defaultValue={task.name}
                                 onChange={(e) => setEditedTask(e.target.value)}
                             />
-                            <ShowInsertedTags state={editedTags} setState={setEditedTags} />
+                            <ShowInsertedTags tags={editedTags} setTags={setEditedTags} />
                             <div>
                                 {tags.map((tag) => (
                                     <button key={tag.id} onClick={() => tagButtonClickForEditing(tag)}>

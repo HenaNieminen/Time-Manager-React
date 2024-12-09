@@ -40,8 +40,8 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             />
             <div>
                 <ShowInsertedTags
-                    state={insertedTaskTag}
-                    setState={setInsertedTaskTag}
+                    tags={insertedTaskTag}
+                    setTags={setInsertedTaskTag}
                 />
             </div>
             {tags.map((tag) => (
