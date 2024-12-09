@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import backFunc from './backendfunc.jsx';
+import { postTasks, postTags } from './backendfunc.jsx';
 
 
 const createNewTask = async (name, tags) => {
@@ -9,7 +9,7 @@ const createNewTask = async (name, tags) => {
             tags,
         };
         try {
-            await backFunc.postTasks(task);
+            await postTasks(task);
             toast.success("Created a new task");
         } catch (error) {
             console.error('Failed to add task:', error.message);
@@ -26,7 +26,7 @@ const createNewTag = async (name) => {
             name,
         };
         try {
-            await backFunc.postTags(tag);
+            await postTags(tag);
             toast.success("Created a new tag");
         } catch (error) {
             console.error('Failed to add tag:', error.message);

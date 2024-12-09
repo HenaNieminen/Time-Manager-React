@@ -1,5 +1,21 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { extractTagNames } from './extractTagNames';
+
+
+//For fetching data as a single clump. Cowabunga it is with the prop drilling!
+const fetchData = async (setTasks, setTags) => {
+    try {
+        const fetchedTasks = await fetchTasks();
+        const fetchedTags = await fetchTags();
+        const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
+
+        setTasks(tasksWithTags);
+        setTags(fetchedTags);
+    } catch (error) {
+        toast.error("Failed syncing data:", error.message);
+    }
+};
 
 //Fetch functions
 const fetchTasks = async () => {
@@ -114,4 +130,4 @@ const editTag = async (tagId, updatedTag) => {
     }
 }
 
-export default { postTasks, postTags, postTimes, removeTask, removeTag, fetchTasks, fetchTags, fetchTimes, editTask };
+export { postTasks, postTags, postTimes, removeTask, removeTag, fetchTasks, fetchTags, fetchTimes, editTask, editTag, fetchData };
