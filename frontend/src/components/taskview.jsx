@@ -4,11 +4,13 @@ import { ShowInsertedTags } from './showinsertedtags';
 import { editTask, removeTask, fetchData } from './backendfunc';
 import { checkDuplicates, extractSingularTags } from './helpers';
 import { toast } from 'react-toastify';
+//import { DragEndEvent } from '@dnd-kit/core';
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [editMode, setEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
+    //const [sortTags, setSortTags] = useState([]);
 
     const adjustTask = async (id) => {
         const originalTask = tasks.find((task) => task.id === id);
@@ -33,6 +35,21 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const tagButtonClickForEditing = (tag) => {
         setEditedTags((prevTags) => (!prevTags.includes(tag) ? [...prevTags, tag] : prevTags));
     };
+
+
+    /*
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+        if (active && over && active.id !== over.id) {
+            const oldIndex = tasks.findIndex(task => task.id === active.id);
+            const newIndex = tasks.findIndex(task => task.id === over.id);
+            const updatedTasks = [...tasks];
+            const [movedTask] = updatedTasks.splice(oldIndex, 1);
+            updatedTasks.splice(newIndex, 0, movedTask);
+            setTasks(updatedTasks);
+        }
+    };
+    */
 
     return (
         <ul>

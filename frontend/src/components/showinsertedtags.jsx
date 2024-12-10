@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const ShowInsertedTags = ({ tags, setTags, }) => {
     return (
         <div>
-            <h3>Inserted Tags</h3>
+            <h4>Inserted tags</h4>
             {tags.map((tag, index) => (
                 <button
                     key={index}
