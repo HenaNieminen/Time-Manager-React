@@ -9,7 +9,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
     //useStates for inserting new tasks or tags
     const [insertedTask, setInsertedTasks] = useState('');
     const [insertedTaskTag, setInsertedTaskTag] = useState([]);
-    //Check if the task already exist and then send it to the database
+    //Check if the task already exists and then send it to the database
     const addTask = async () => {
         const isDuplicate = checkDuplicates(tasks, insertedTask);
         if (isDuplicate) {
