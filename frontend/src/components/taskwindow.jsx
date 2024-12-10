@@ -12,8 +12,8 @@ to the other components in the backendfunc file. Those functions in return will 
 update the data to the backend so all changes should be seen by every component immediately
 without worrying about saving or having updated data only being seen for that one component
 that manipulated it. Major refactoring would be in place, but for the sake of this being
-my first project, I'd rather not go the extra mile of refactoring and then returning a non functional
-piece of software*/
+my first project, I'd rather not go the extra mile of refactoring without a clue how,
+and then returning a non functional POS (Piece of software ;) )*/
 const TaskWindow = () => {
     //Data use states to drill into props
     const [tasks, setTasks] = useState([]);
