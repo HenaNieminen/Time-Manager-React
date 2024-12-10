@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ShowInsertedTags } from './showinsertedtags';
-import { extractSingularTags } from './extractTagNames';
 import { editTask, removeTask, fetchData } from './backendfunc';
-import { checkDuplicates } from './createnew';
+import { checkDuplicates, extractSingularTags } from './helpers';
 import { toast } from 'react-toastify';
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {

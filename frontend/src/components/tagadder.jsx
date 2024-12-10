@@ -1,4 +1,4 @@
-import { createNewTag, checkDuplicates } from "./createnew";
+import { createNewTag, checkDuplicates } from "./helpers";
 import { fetchData } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -8,12 +8,13 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');
 
     const addTag = async () => {
-        const isDuplicate = checkDuplicates(tags, addedTag);
+        const lowerCaseTag = addedTag.toLowerCase();
+        const isDuplicate = checkDuplicates(tags, lowerCaseTag);
         if (isDuplicate) {
             toast.error('Tag already exists!');
             return;
         }
-        await createNewTag(addedTag);
+        await createNewTag(lowerCaseTag);
         await fetchData(setTasks, setTags);
     };
 

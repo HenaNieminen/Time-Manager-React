@@ -11,7 +11,7 @@ const TaskWindow = () => {
 
     useEffect(() => {
         fetchData(setTasks, setTags);
-    }, [setTags, setTasks]);
+    }, []);
 
     return (
         <>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { extractTagNames } from './extractTagNames';
+import { extractTagNames } from './helpers';
 
 
 //For fetching data as a single clump. Cowabunga it is with the prop drilling!
@@ -141,4 +141,5 @@ export { postTasks,
         editTask,
         editTag,
         fetchData };
-//11 FUNCTIONS!!!
+/*11 FUNCTIONS!!!
+To be fair, these are meant for general use anyhow by other components*/

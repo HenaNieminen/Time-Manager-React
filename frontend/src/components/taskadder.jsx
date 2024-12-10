@@ -1,5 +1,5 @@
 import { ShowInsertedTags } from "./showinsertedtags";
-import { checkDuplicates, createNewTask } from "./createnew";
+import { checkDuplicates, createNewTask, removeUndefinedTags } from "./helpers";
 import { fetchData, removeTag } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
@@ -20,7 +20,8 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
         await fetchData(setTasks, setTags);
     };
 
-    const deleteTag = async (id) => {
+    const deleteTag = async (id, tasks) => {
+        await removeUndefinedTags(id, tasks);
         await removeTag(id);
         await fetchData(setTasks, setTags);
     };
@@ -54,7 +55,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     <button onClick={() => tagButtonClickForAdding(tag)}>
                         {tag.name}
                     </button>
-                    <button onClick={() => deleteTag(tag.id)}>x</button>
+                    <button onClick={() => deleteTag(tag.id, tasks, tags)}>x</button>
                 </div>
             ))}
             <div>
