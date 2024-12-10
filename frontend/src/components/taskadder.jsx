@@ -6,9 +6,10 @@ import { useState } from "react";
 import PropTypes from 'prop-types';
 
 const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
+    //useStates for inserting new tasks or tags
     const [insertedTask, setInsertedTasks] = useState('');
     const [insertedTaskTag, setInsertedTaskTag] = useState([]);
-
+    //Check if the task already exist and then send it to the database
     const addTask = async () => {
         const isDuplicate = checkDuplicates(tasks, insertedTask);
         if (isDuplicate) {
@@ -19,13 +20,13 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
         await createNewTask(insertedTask, tagIds);
         await fetchData(setTasks, setTags);
     };
-
+    //Delete the tag, go through any task that holds it and remove the entries
     const deleteTag = async (id, tasks) => {
         await removeUndefinedTags(id, tasks);
         await removeTag(id);
         await fetchData(setTasks, setTags);
     };
-
+    //Add the tag to the task if it hasn't been placed. Otherwise igonre
     const tagButtonClickForAdding = (tag) => {
         setInsertedTaskTag((prevTags) => {
             if (!prevTags.includes(tag)) {
