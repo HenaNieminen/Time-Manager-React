@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 
-const ShowInsertedTags = ({ state, setState, }) => {
+const ShowInsertedTags = ({ tags, setTags, }) => {
     return (
         <div>
-            <h3>Inserted Tags</h3>
-            {state.map((tag, index) => (
+            <h4>Inserted tags</h4>
+            {tags.map((tag, index) => (
                 <button
                     key={index}
                     onClick={() => {
-                        const updatedTags = state.filter((t) => t !== tag);
-                        setState(updatedTags);
+                        const updatedTags = tags.filter((t) => t !== tag);
+                        setTags(updatedTags);
                     }}
                 >
                     {tag.name}
@@ -21,8 +21,8 @@ const ShowInsertedTags = ({ state, setState, }) => {
 };
 //Prop validation. Eslint keeps nagging about it if you don't have prop validation
 ShowInsertedTags.propTypes = {
-    state: PropTypes.array.isRequired,
-    setState: PropTypes.func.isRequired,
+    tags: PropTypes.array.isRequired,
+    setTags: PropTypes.func.isRequired,
 };
 
 export { ShowInsertedTags };

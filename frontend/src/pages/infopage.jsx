@@ -19,9 +19,11 @@ const InfoPage = () => {
                     toastify, router, etc. have also been used. The plan is also to localize (i18n).
                 </p>
                 <p>AI tools (GitHub Copilot) have mainly been used to solve small problems
-                    when a straightforward answer could not be found through web searches.
+                    when a straightforward answer could not be found through web searches. (Mainly button functions and getting some parts of logic done.
+                    Attribution will be given when used to an extended degree)
                     Casmoden Solutions on youtube is also a good source for learning stuff.
                     <a href="https://www.youtube.com/@cosdensolutions" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@cosdensolutions</a>
+                    This mostly applies to useContext. I went too far with prop drilling the task function
                 </p>
             </div>
         </div>

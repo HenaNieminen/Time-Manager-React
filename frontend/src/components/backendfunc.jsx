@@ -1,5 +1,21 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { extractTagNames } from './helpers';
+
+
+//For fetching data as a single clump. Cowabunga it is with the prop drilling!
+const fetchData = async (setTasks, setTags) => {
+    try {
+        const fetchedTasks = await fetchTasks();
+        const fetchedTags = await fetchTags();
+        const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
+
+        setTasks(tasksWithTags);
+        setTags(fetchedTags);
+    } catch (error) {
+        toast.error("Failed syncing data:", error.message);
+    }
+};
 
 //Fetch functions
 const fetchTasks = async () => {
@@ -80,7 +96,7 @@ const removeTask = async (taskId) => {
 
 const removeTag = async (tagId) => {
     try {
-        await axios.delete(`http://127.0.0.1:3010/tasks/${tagId}`);
+        await axios.delete(`http://127.0.0.1:3010/tags/${tagId}`);
         toast.success('Tag removed successfully!');
     } catch (error) {
         console.error('Error removing tag:', error.message);
@@ -114,4 +130,16 @@ const editTag = async (tagId, updatedTag) => {
     }
 }
 
-export default { postTasks, postTags, postTimes, removeTask, removeTag, fetchTasks, fetchTags, fetchTimes, editTask };
+export { postTasks,
+        postTags,
+        postTimes,
+        removeTask,
+        removeTag,
+        fetchTasks,
+        fetchTags,
+        fetchTimes,
+        editTask,
+        editTag,
+        fetchData };
+/*11 FUNCTIONS!!!
+To be fair, these are meant for general use anyhow by other components*/
