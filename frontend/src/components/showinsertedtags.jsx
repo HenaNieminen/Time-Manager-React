@@ -4,7 +4,7 @@ to a task when editing a task or adding one. It will take the state
 from adding or editing and will remove the tag from insertion if clicked */
 const ShowInsertedTags = ({ tags, setTags, }) => {
     return (
-        <div>
+        <div style={{ textAlign: 'center', margin: '0px' }}>
             <h4>Inserted tags</h4>
             {tags.map((tag, index) => (
                 <button

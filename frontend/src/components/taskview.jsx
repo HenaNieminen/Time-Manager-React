@@ -45,6 +45,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     };
 
     const sensors = useSensors(
+        //Use the mouse sensor primarily
         useSensor(PointerSensor)
     );
 
@@ -64,7 +65,9 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
 
     return (
         <>
-        <h3>Tasks</h3>
+            <div style={{ textAlign: 'center' }}>
+                <h2>Tasks</h2>
+            </div>
             <DndContext
                 collisionDetection={closestCenter}
                 sensors={sensors}
@@ -73,13 +76,21 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 <div className="task-container">
                     {tasks.map((task) => (
                         editMode === task.id ? (
-                            <div key={task.id} className="sortableTask">
+                            <SortableTask key={task.id} id={task.id} bg="#FFD700">
+                            <div key={task.id}>
                                 <input
                                     type="text"
                                     defaultValue={task.name}
                                     onChange={(e) => setEditedTask(e.target.value)}
                                 />
-                                <ShowInsertedTags tags={editedTags} setTags={setEditedTags} />
+                                {editedTags.length > 0 && (
+                                    <div>
+                                        <ShowInsertedTags
+                                            tags={editedTags}
+                                            setTags={setEditedTags}
+                                        />
+                                    </div>
+                                )}
                                 <div>
                                     {tags.map((tag) => (
                                         <button key={tag.id}
@@ -88,22 +99,29 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                                         </button>
                                     ))}
                                 </div>
-                                <button onClick={() => adjustTask(task.id)}>Save</button>
-                                <button onClick={() => setEditMode(null)}>Cancel</button>
+                                <div className="manipulateBar">
+                                    <button onClick={() => adjustTask(task.id)}>Save</button>
+                                    <button onClick={() => setEditMode(null)}>Cancel</button>
+                                </div>
                             </div>
+                            </SortableTask>
                         ) : (
-                            <SortableTask key={task.id} id={task.id} bg="#fff">
+                            <SortableTask key={task.id} id={task.id} bg="#FFF">
                                     {/* The BG color could be decided by the user at some point.
-                                    Maybe in the additional data of the task? */}
+                                    Maybe in the additional data of the task? For tag colors,
+                                    I really dont have a clue since they dont have an additional
+                                    id or a datatype you could store. They only have a name and id*/}
                                 <p>Name: <strong>{task.name}</strong></p>
                                 <p>Tags: <strong>{task.tagNames}</strong></p>
-                                <button
-                                    onClick={() => {
-                                        setEditMode(task.id);
-                                        setEditedTask(task.name);
-                                        setEditedTags(extractSingularTags(task.tags, tags));
-                                    }}>Edit</button>
-                                <button onClick={() => deleteTask(task.id)}>Delete</button>
+                                <div className="manipulateBar">
+                                    <button
+                                        onClick={() => {
+                                            setEditMode(task.id);
+                                            setEditedTask(task.name);
+                                            setEditedTags(extractSingularTags(task.tags, tags));
+                                        }}>Edit</button>
+                                    <button onClick={() => deleteTask(task.id)}>Delete</button>
+                                </div>
                             </SortableTask>
                         )
                     ))}

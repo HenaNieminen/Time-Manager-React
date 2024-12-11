@@ -11,8 +11,8 @@ const FrontPage = () => {
         <ToastContainer />
         <h1>Hello. This is still under construction</h1>
         <div className="navbar">
-            <Link className="navbutton" to="/settings">Go to settings page</Link>
-            <Link className="navbutton" to="/info">Go to info page</Link>
+            <Link className="navbutton" to="/settings">Settings</Link>
+            <Link className="navbutton" to="/info">Help/Info</Link>
         </div>
         <TaskWindow />
         </>

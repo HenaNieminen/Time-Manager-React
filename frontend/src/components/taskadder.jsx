@@ -9,6 +9,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
     //useStates for inserting new tasks or tags
     const [insertedTask, setInsertedTasks] = useState('');
     const [insertedTaskTag, setInsertedTaskTag] = useState([]);
+    const [tagDeleteMode, setDeleteMode] = useState(null);
     //Check if the task already exists and then send it to the database
     const addTask = async () => {
         const isDuplicate = checkDuplicates(tasks, insertedTask);
@@ -34,6 +35,10 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             }
             return prevTags;
         });
+    };
+
+    const toggleDeleteMode = () => {
+        setTagDeleteMode((prevMode) => !prevMode);
     };
 
     return (
