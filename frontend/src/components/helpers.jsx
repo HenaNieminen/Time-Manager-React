@@ -40,7 +40,8 @@ const createNewTag = async (name) => {
 const checkDuplicates = (state, selected) => {
     //Goes through the state where tasks are stored and checks if there is a duplicate name
     for (const item of state) {
-        if (item.name === selected) {
+        //To lowercase on both to ignore cases
+        if (item.name.toLowerCase() === selected.toLowerCase()) {
             return true;
         }
     }

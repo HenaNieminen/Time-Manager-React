@@ -9,7 +9,7 @@ import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {
-    const [editMode, setEditMode] = useState(null);
+    const [taskEditMode, setTaskEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
     //const [sortTags, setSortTags] = useState([]);
@@ -27,7 +27,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         const tagId = editedTags.map((tag) => tag.id);
         await editTask(id, { name: editedTask, tags: tagId });
         await fetchData(setTasks, setTags);
-        setEditMode(null);
+        setTaskEditMode(null);
     };
     //Delete the task from the database
     const deleteTask = async (id) => {
@@ -75,7 +75,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             >
                 <div className="task-container">
                     {tasks.map((task) => (
-                        editMode === task.id ? (
+                        taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFD700">
                             <div key={task.id}>
                                 <input
@@ -101,7 +101,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                                 </div>
                                 <div className="manipulateBar">
                                     <button onClick={() => adjustTask(task.id)}>Save</button>
-                                    <button onClick={() => setEditMode(null)}>Cancel</button>
+                                    <button onClick={() => setTaskEditMode(null)}>Cancel</button>
                                 </div>
                             </div>
                             </SortableTask>
@@ -116,7 +116,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                                 <div className="manipulateBar">
                                     <button
                                         onClick={() => {
-                                            setEditMode(task.id);
+                                            setTaskEditMode(task.id);
                                             setEditedTask(task.name);
                                             setEditedTags(extractSingularTags(task.tags, tags));
                                         }}>Edit</button>
