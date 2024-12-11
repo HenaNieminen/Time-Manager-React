@@ -68,6 +68,9 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             <div style={{ textAlign: 'center' }}>
                 <h2>Tasks</h2>
             </div>
+            {tasks.length === 0 && (
+                <h1>No tasks found</h1>
+            )}
             <DndContext
                 collisionDetection={closestCenter}
                 sensors={sensors}
