@@ -37,7 +37,7 @@ const TaskWindow = () => {
                     />
                 </div>
             </div>
-            <div>
+            <div className="window-row">
                 {/*Can't get enough of prop drilling! */}
                 <TaskAdder
                 tags={tags}
@@ -46,7 +46,7 @@ const TaskWindow = () => {
                 setTags={setTags}
                 />
             </div>
-            <div>
+            <div className="window-row">
                 <TagAdder
                 tags={tags}
                 setTasks={setTasks}

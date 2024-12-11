@@ -45,26 +45,28 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                 value={insertedTask}
                 onChange={(e) => setInsertedTasks(e.target.value)}
             />
-            <div>
-                <ShowInsertedTags
-                    tags={insertedTaskTag}
-                    setTags={setInsertedTaskTag}
-                />
-            </div>
-            {tags.map((tag) => (
-                <div key={tag.id}>
-                    <button onClick={() => tagButtonClickForAdding(tag)}>
-                        {tag.name}
-                    </button>
-                    <button onClick={() => deleteTag(tag.id, tasks, tags)}>x</button>
+            <button onClick={() => {
+                setInsertedTaskTag([]);
+                setInsertedTasks('');
+                addTask();
+            }}>Add Task</button>
+            {insertedTaskTag.length > 0 && (
+                <div>
+                    <ShowInsertedTags
+                        tags={insertedTaskTag}
+                        setTags={setInsertedTaskTag}
+                    />
                 </div>
-            ))}
+            )}
             <div>
-                <button onClick={() => {
-                    setInsertedTaskTag([]);
-                    setInsertedTasks('');
-                    addTask();
-                }}>Add Task</button>
+                {tags.map((tag) => (
+                    <div key={tag.id}>
+                        <button onClick={() => tagButtonClickForAdding(tag)}>
+                            {tag.name}
+                        </button>
+                        <button onClick={() => deleteTag(tag.id, tasks, tags)}>x</button>
+                    </div>
+                ))}
             </div>
         </div>
     );

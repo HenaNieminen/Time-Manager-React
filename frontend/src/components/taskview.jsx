@@ -4,7 +4,9 @@ import { ShowInsertedTags } from './showinsertedtags';
 import { editTask, removeTask, fetchData } from './backendfunc';
 import { checkDuplicates, extractSingularTags } from './helpers';
 import { toast } from 'react-toastify';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import  SortableTask  from './sortabletask.jsx';
+import '../styles/taskcards.css';
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [editMode, setEditMode] = useState(null);
@@ -42,7 +44,11 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         });
     };
 
-    const handleDragEnd = (event) => {
+    const sensors = useSensors(
+        useSensor(PointerSensor)
+    );
+
+    const handleDragEnd = async (event) => {
         const { active, over } = event;
         if (!over) return;
         if (active && over && active.id !== over.id) {
@@ -52,49 +58,56 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             const [movedTask] = updatedTasks.splice(oldIndex, 1);
             updatedTasks.splice(newIndex, 0, movedTask);
             setTasks(updatedTasks);
+            //Will not persist. Needs a fix later
         }
     };
 
     return (
         <>
         <h3>Tasks</h3>
-            <DndContext onDragEnd={handleDragEnd}>
-                {tasks.map((task) => (
-                editMode === task.id ? (
-                    <div key={task.id}>
-                        <input
-                            type="text"
-                            defaultValue={task.name}
-                            onChange={(e) => setEditedTask(e.target.value)}
-                        />
-                    <ShowInsertedTags tags={editedTags} setTags={setEditedTags} />
-                    <div>
-                        {tags.map((tag) => (
-                            <button key={tag.id}
-                            onClick={() => tagButtonClickForEditing(tag)}>
-                            {tag.name}
-                            </button>
-                        ))}
-                    </div>
-                    <button onClick={() => adjustTask(task.id)}>Save</button>
-                    <button onClick={() => setEditMode(null)}>Cancel</button>
-                    </div>
-                    ) : (
-                    <div key={task.id}>
-                        <p>Name: <strong>{task.name}</strong></p>
-                        <p>Tags: <strong>{task.tagNames}</strong></p>
-                        <button
-                            onClick={() => {
-                            setEditMode(task.id);
-                            setEditedTask(task.name);
-                            setEditedTags(extractSingularTags(task.tags, tags));
-                        }}>Edit
-                        </button>
-                        <button onClick={() => deleteTask(task.id)}>
-                        Delete</button>
-                    </div>
-                    )
-                ))}
+            <DndContext
+                collisionDetection={closestCenter}
+                sensors={sensors}
+                onDragEnd={handleDragEnd}
+            >
+                <div className="task-container">
+                    {tasks.map((task) => (
+                        editMode === task.id ? (
+                            <div key={task.id} className="sortableTask">
+                                <input
+                                    type="text"
+                                    defaultValue={task.name}
+                                    onChange={(e) => setEditedTask(e.target.value)}
+                                />
+                                <ShowInsertedTags tags={editedTags} setTags={setEditedTags} />
+                                <div>
+                                    {tags.map((tag) => (
+                                        <button key={tag.id}
+                                            onClick={() => tagButtonClickForEditing(tag)}>
+                                            {tag.name}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button onClick={() => adjustTask(task.id)}>Save</button>
+                                <button onClick={() => setEditMode(null)}>Cancel</button>
+                            </div>
+                        ) : (
+                            <SortableTask key={task.id} id={task.id} bg="#fff">
+                                    {/* The BG color could be decided by the user at some point.
+                                    Maybe in the additional data of the task? */}
+                                <p>Name: <strong>{task.name}</strong></p>
+                                <p>Tags: <strong>{task.tagNames}</strong></p>
+                                <button
+                                    onClick={() => {
+                                        setEditMode(task.id);
+                                        setEditedTask(task.name);
+                                        setEditedTags(extractSingularTags(task.tags, tags));
+                                    }}>Edit</button>
+                                <button onClick={() => deleteTask(task.id)}>Delete</button>
+                            </SortableTask>
+                        )
+                    ))}
+                </div>
             </DndContext>
         </>
     );

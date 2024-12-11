@@ -1,0 +1,41 @@
+.task-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Flexible columns */
+    gap: 16px;
+    /* Spacing between grid items */
+    padding: 16px;
+    /* Optional padding */
+}
+
+.sortableTask {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: #f9f9f9;
+    /* Background color for tasks */
+    border: 1px solid #ddd;
+    /* Optional border */
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    min-height: 100px;
+    max-width: 200px;
+    /* Ensure a minimum height for tasks */
+}
+
+.drag-handle {
+    cursor: grab;
+    padding: 4px;
+    background: #ddd;
+    /* Optional */
+    border-bottom: 1px solid #ccc;
+    /* Optional */
+    text-align: center;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
