@@ -14,9 +14,19 @@ p {
     font-family: "Roboto";
 }
 
-.navbar {}
+.navbar {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
 
-.navbutton {}
+.navbutton {
+    margin: 10px;
+    background-color: black;
+    color: white;
+    padding: 20px;
+
+}
 
 .task-window {
     max-height: 400px;
