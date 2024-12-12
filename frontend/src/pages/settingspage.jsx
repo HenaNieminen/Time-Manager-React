@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import '../styles/main.css'
 
 const SettingsPage = () => {
     return (
         <>
-        <Link to="/">Go back</Link>
+        <div className='windowColumn'>
+            <Link className='navButton' to="/">Go back</Link>
+        </div>
         </>
     );
 };

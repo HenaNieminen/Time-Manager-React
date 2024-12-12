@@ -26,8 +26,10 @@
     border-radius: 5px;
 
     p {
-        overflow: wrap;
-        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: wrap;
+        max-width: 225px;
     }
 
     &:active {
