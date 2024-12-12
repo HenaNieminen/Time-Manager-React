@@ -6,14 +6,10 @@
   overflow-y: scroll;
   scrollbar-width: none;
   max-height: calc(35vh + 50px);
-  /* For Firefox */
-  -ms-overflow-style: none;
-  /* For Internet Explorer and Edge */
+  max-width: calc(40vw + 100px);
 }
-
 .task-container::-webkit-scrollbar {
   display: none;
-  /* For Chrome, Safari, and Opera */
 }
 
 .sortableTask {
@@ -22,11 +18,19 @@
   justify-content: center;
   align-items: center;
   padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
   min-height: 200px;
   max-width: calc(400px + 5vw);
+  border-radius: 5px;
+}
+.sortableTask p {
+  overflow: wrap;
+  max-width: 200px;
+}
+.sortableTask:active {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: grabbing;
 }
 
 .manipulateBar {
@@ -41,7 +45,6 @@
   border-bottom: 1px solid #ccc;
   text-align: center;
 }
-
 .drag-handle:active {
   cursor: grabbing;
 }

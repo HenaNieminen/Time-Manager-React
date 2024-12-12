@@ -1,13 +1,21 @@
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
 
 export default function SortableTask({ id, children, bg }) {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({
+        id,
+        animateLayoutChanges: defaultAnimateLayoutChanges,
+    });
 
     const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-        backgroundColor: bg,
+        transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
+        transition: transition || 'transform 50ms ease',
+        backgroundColor: bg || "#FFF",
     };
 
     return (

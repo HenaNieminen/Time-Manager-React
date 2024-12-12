@@ -5,6 +5,7 @@ import { editTask, removeTask, fetchData } from './backendfunc';
 import { checkDuplicates, extractSingularTags } from './helpers';
 import { toast } from 'react-toastify';
 import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
 
@@ -76,6 +77,10 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 sensors={sensors}
                 onDragEnd={handleDragEnd}
             >
+                <SortableContext
+                    items={tasks.map((task) => task.id)}
+                    strategy={rectSortingStrategy}
+                >
                 <div className="task-container">
                     {tasks.map((task) => (
                         taskEditMode === task.id ? (
@@ -114,8 +119,8 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                                     Maybe in the additional data of the task? For tag colors,
                                     I really dont have a clue since they dont have an additional
                                     id or a datatype you could store. They only have a name and id*/}
-                                <p>Name: <strong>{task.name}</strong></p>
-                                <p>Tags: <strong>{task.tagNames}</strong></p>
+                                <p className="nameContainer">Name: <strong>{task.name}</strong></p>
+                                <p className="nameContainer">Tags: <strong>{task.tagNames}</strong></p>
                                 <div className="manipulateBar">
                                     <button
                                         onClick={() => {
@@ -129,6 +134,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                         )
                     ))}
                 </div>
+                </SortableContext>
             </DndContext>
         </>
     );
