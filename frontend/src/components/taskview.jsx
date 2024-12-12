@@ -17,6 +17,10 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
 
     //Adjust task data and send the edited data to the backend
     const adjustTask = async (id) => {
+        if (editedTask.length === 0) {
+            toast.error('Task name cannot be empty!');
+            return;
+        }
         const originalTask = tasks.find((task) => task.id === id);
         if (originalTask.name !== editedTask) {
             const isDuplicate = await checkDuplicates(tasks, editedTask);

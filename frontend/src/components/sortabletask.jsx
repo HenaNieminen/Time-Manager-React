@@ -22,8 +22,8 @@ export default function SortableTask({ id, children, bg }) {
 
     return (
         /*I had trouble making edit and delete buttons work when taskcards were
-        applied, so I found a solution where yu can put the listeners to a certain spot
-        of the card and made a drag handle*/
+        applied, so Co-Pilot suggested a solution where yu can put the listeners
+        to a certain spot of the card and make a drag handle*/
         <div className="sortableTask" ref={setNodeRef} style={style}>
             <div {...attributes} {...listeners} className="dragHandle">
                 <span>☰</span>
