@@ -1,4 +1,4 @@
-.task-container {
+.taskContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
@@ -32,7 +32,6 @@
 
     &:active {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        cursor: grabbing;
     }
 }
 
@@ -41,7 +40,7 @@
     flex-direction: row;
 }
 
-.drag-handle {
+.dragHandle {
     cursor: grab;
     padding: 4px;
     background: #ddd;
@@ -55,13 +54,13 @@
 
 
 @media screen and (min-width: 768px) {
-    .task-container {
+    .taskContainer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .task-container {
+    .taskContainer {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }

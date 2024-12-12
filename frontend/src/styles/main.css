@@ -14,13 +14,13 @@ p {
   font-family: "Roboto";
 }
 
-.navbar {
+.navBar {
   display: flex;
   justify-content: center;
   flex-direction: row;
 }
 
-.navbutton {
+.navButton {
   margin: 10px;
   background-color: black;
   color: white;
@@ -30,7 +30,7 @@ p {
   font-family: "Roboto";
 }
 
-.task-window {
+.taskWindow {
   max-height: 400px;
   width: 300px;
   overflow-y: scroll;
@@ -38,7 +38,7 @@ p {
   padding: 10px;
 }
 
-.window-row {
+.windowRow {
   display: flex;
   gap: 100px;
   min-width: calc(100px + 25vw);

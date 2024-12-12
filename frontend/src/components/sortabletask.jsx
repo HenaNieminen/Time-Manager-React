@@ -20,7 +20,7 @@ export default function SortableTask({ id, children, bg }) {
 
     return (
         <div className="sortableTask" ref={setNodeRef} style={style}>
-            <div {...attributes} {...listeners} className="drag-handle">
+            <div {...attributes} {...listeners} className="dragHandle">
                 <span>☰</span>
             </div>
             {children}

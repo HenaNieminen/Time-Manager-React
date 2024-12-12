@@ -81,7 +81,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                     items={tasks.map((task) => task.id)}
                     strategy={rectSortingStrategy}
                 >
-                <div className="task-container">
+                <div className="taskContainer">
                     {tasks.map((task) => (
                         taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFD700">
