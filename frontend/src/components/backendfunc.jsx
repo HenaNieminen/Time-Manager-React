@@ -87,7 +87,6 @@ const postTimes = async (time) => {
 const removeTask = async (taskId) => {
     try {
         await axios.delete(`http://127.0.0.1:3010/tasks/${taskId}`);
-        toast.success('Task removed successfully!');
     } catch (error) {
         console.error('Error removing task:', error.message);
         throw new Error(error.message);
@@ -97,7 +96,6 @@ const removeTask = async (taskId) => {
 const removeTag = async (tagId) => {
     try {
         await axios.delete(`http://127.0.0.1:3010/tags/${tagId}`);
-        toast.success('Tag removed successfully!');
     } catch (error) {
         console.error('Error removing tag:', error.message);
         throw new Error(error.message);
@@ -109,7 +107,6 @@ const removeTag = async (tagId) => {
 const editTask = async (taskId, updatedTask) => {
     try {
         await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
-        toast.success('Task and tags updated successfully!');
     } catch (error) {
         console.error('Error editing task or tags:', error.message);
         throw new Error(error.message);
@@ -118,12 +115,7 @@ const editTask = async (taskId, updatedTask) => {
 
 const editTag = async (tagId, updatedTag) => {
     try {
-        const tagUpdate = {
-            tagId,
-            name: updatedTag
-        };
-        await axios.put(`http://127.0.0.1:3010/tags/${tagId}`, tagUpdate);
-        toast.success('Tag updated successfully!');
+        await axios.put(`http://127.0.0.1:3010/tags/${tagId}`, updatedTag);
     } catch (error) {
         console.error('Error editing task or tags:', error.message);
         throw new Error(error.message);

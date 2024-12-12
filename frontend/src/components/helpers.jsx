@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { postTasks, editTask, postTags } from './backendfunc.jsx';
 
-
+//Function to help creating a new task. Will post the task to the backend
 const createNewTask = async (name, tags) => {
     if (name) {
         const task = {
@@ -19,7 +19,7 @@ const createNewTask = async (name, tags) => {
         toast.error("Name is required for the task");
     }
 }
-
+//The same for tags
 const createNewTag = async (name) => {
     if (name) {
         const tag = {
@@ -40,7 +40,8 @@ const createNewTag = async (name) => {
 const checkDuplicates = (state, selected) => {
     //Goes through the state where tasks are stored and checks if there is a duplicate name
     for (const item of state) {
-        if (item.name === selected) {
+        //To lowercase on both to ignore cases
+        if (item.name.toLowerCase() === selected.toLowerCase()) {
             return true;
         }
     }
@@ -48,10 +49,15 @@ const checkDuplicates = (state, selected) => {
 };
 
 
-const removeUndefinedTags= async (id, tasks) => {
+const removeUndefinedTags = async (id, tasks) => {
+    /*Goes through each task, seeing if the deleted tag's id is found and then filters it out.
+    The tagids in the task object are in string so that's why it needs conversions*/
     for (const task of tasks) {
-        task.tags = task.tags.split(',').filter(tag => tag !== id).join(',');
-        await editTask(task.id, task);
+        const updatedTags = task.tags.split(',').filter(tag => tag.trim() !== id.toString()).join(',');
+        if (task.tags !== updatedTags) {
+            task.tags = updatedTags;
+            await editTask(task.id, task);
+        }
     }
 };
 

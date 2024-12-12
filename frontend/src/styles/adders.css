@@ -1,0 +1,7 @@
+.tagRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 300px;
+  overflow-y: auto;
+}/*# sourceMappingURL=adders.css.map */

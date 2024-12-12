@@ -8,13 +8,12 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');
 
     const addTag = async () => {
-        const lowerCaseTag = addedTag.toLowerCase();
-        const isDuplicate = checkDuplicates(tags, lowerCaseTag);
+        const isDuplicate = checkDuplicates(tags, addedTag);
         if (isDuplicate) {
             toast.error('Tag already exists!');
             return;
         }
-        await createNewTag(lowerCaseTag);
+        await createNewTag(addedTag);
         await fetchData(setTasks, setTags);
     };
 
