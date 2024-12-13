@@ -54,6 +54,15 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         useSensor(PointerSensor)
     );
 
+    const addTagFilters = (tag) => {
+        setTagFilters((prevFilters) => {
+            if (!prevFilters.includes(tag)) {
+                return [...prevFilters, tag];
+            }
+            return prevFilters;
+        });
+    };
+
 
     const handleDragEnd = async (event) => {
         const { active, over } = event;
@@ -63,6 +72,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         const activeTask = tasks.find((task) => task.id === activeTaskId);
         const overTask = tasks.find((task) => task.id === overTaskId);
         try {
+            //I had trouble with this by awaiting both sequentially rather than promising them all in succession
             await Promise.all([
                 editTask(activeTask.id, overTask),
                 editTask(overTask.id, activeTask),
@@ -74,12 +84,32 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         }
     };
 
+    const filteredTasks = tasks.filter((task) => {
+        if (tagFilters.length === 0) return true;
+        const taskTagIds = task.tags.split(',').map(Number);
+        return taskTagIds.some((tagId) => tagFilters.includes(tagId));
+    });
+
     return (
         <>
             <div style={{ textAlign: 'center' }}>
                 <h2>Tasks</h2>
             </div>
-            {tasks.length === 0 && (
+            <div style={{marginBottom: '20px'}}>
+                <h3>Filter by tag</h3>
+                <div className="tagRow">
+                    <ShowInsertedTags
+                    tags={tagFilters}
+                    setTags={setTagFilters}
+                    />
+                </div>
+                {tags.map((tag) => (
+                    <button key={tag.id} onClick={() => addTagFilters(tag.id)}>
+                        {tag.name}
+                    </button>
+                ))}
+            </div>
+            {filteredTasks.length === 0 && (
                 <h1>No tasks found</h1>
             )}
             <DndContext
@@ -88,11 +118,11 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 onDragEnd={handleDragEnd}
             >
                 <SortableContext
-                    items={tasks.map((task) => task.id)}
+                    items={filteredTasks.map((task) => task.id)}
                     strategy={rectSortingStrategy}
                 >
                 <div className="taskContainer">
-                    {tasks.map((task) => (
+                    {filteredTasks.map((task) => (
                         taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFD700">
                             <div key={task.id}>
@@ -125,10 +155,6 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                             </SortableTask>
                         ) : (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
-                                    {/* The BG color could be decided by the user at some point.
-                                    Maybe in the additional data of the task? For tag colors,
-                                    I really dont have a clue since they dont have an additional
-                                    id or a datatype you could store. They only have a name and id*/}
                                 <p className="nameContainer">Name: <strong>{task.name}</strong></p>
                                 <p className="nameContainer">Tags: <strong>{task.tagNames}</strong></p>
                                 <div className="manipulateBar">

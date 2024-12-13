@@ -1,6 +1,6 @@
 .taskContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
   padding: 16px;
   overflow-y: scroll;
@@ -50,7 +50,12 @@
   cursor: grabbing;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1200px) {
+  .taskContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (min-width: 1750px) {
   .taskContainer {
     grid-template-columns: 1fr 1fr 1fr;
   }

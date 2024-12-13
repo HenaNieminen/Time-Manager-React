@@ -35,7 +35,7 @@ export default function SortableTask({ id, children, bg }) {
 }
 
 SortableTask.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     children: PropTypes.node,
     bg: PropTypes.string,
 };
