@@ -5,13 +5,13 @@ const InfoPage = () => {
 
     return (
     <>
-        <div>
+        <div className="windowColumn">
             <h1>About the Application</h1>
             <h2>Author: Henri Nieminen</h2>
-            <div>
+            <div className="textContainer">
                 <h3>Instructions:</h3>
             </div>
-            <div>
+            <div className="textContainer">
                 <h3>Materials Used</h3>
                 <p>So far, no licensed materials have been used in this work.
                     Instead of CSS, I have used SASS, which is an extension of the CSS language
@@ -26,8 +26,8 @@ const InfoPage = () => {
                     This mostly applies to useContext. I went too far with prop drilling the task function
                 </p>
             </div>
+                <Link className="navButton" to="/">Go back</Link>
         </div>
-        <Link to="/">Go back</Link>
     </>
     );
 };

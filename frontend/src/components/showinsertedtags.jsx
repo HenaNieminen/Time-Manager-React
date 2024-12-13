@@ -4,8 +4,7 @@ to a task when editing a task or adding one. It will take the state
 from adding or editing and will remove the tag from insertion if clicked */
 const ShowInsertedTags = ({ tags, setTags, }) => {
     return (
-        <div style={{ textAlign: 'center', margin: '0px' }}>
-            <h4>Inserted tags</h4>
+        <div>
             {tags.map((tag, index) => (
                 <button
                     key={index}
@@ -20,7 +19,7 @@ const ShowInsertedTags = ({ tags, setTags, }) => {
         </div>
     );
 };
-//Prop validation. Eslint keeps nagging about it if you don't have prop validation
+
 ShowInsertedTags.propTypes = {
     tags: PropTypes.array.isRequired,
     setTags: PropTypes.func.isRequired,

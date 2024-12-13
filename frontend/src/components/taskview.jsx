@@ -13,10 +13,14 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
-    //const [sortTags, setSortTags] = useState([]);
+    const [tagFilters, setTagFilters] = useState([]);
 
     //Adjust task data and send the edited data to the backend
     const adjustTask = async (id) => {
+        if (editedTask.length === 0) {
+            toast.error('Task name cannot be empty!');
+            return;
+        }
         const originalTask = tasks.find((task) => task.id === id);
         if (originalTask.name !== editedTask) {
             const isDuplicate = await checkDuplicates(tasks, editedTask);
@@ -38,9 +42,13 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     //Add the tag to a task if it has not been previously placed. Ignore if it's already there
     const tagButtonClickForEditing = (tag) => {
         setEditedTags((prevTags) => {
-            if (!prevTags.includes(tag)) {
+            //Check if the tag exists with the some function
+            const tagExists = prevTags.some((t) => t.id === tag.id);
+            //If not true
+            if (!tagExists) {
                 return [...prevTags, tag];
             }
+            //If true, will not return the duplicate
             return prevTags;
         });
     };
@@ -50,26 +58,65 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         useSensor(PointerSensor)
     );
 
+    const addTagFilters = (tag) => {
+        setTagFilters((prevFilters) => {
+            const filterExists = prevFilters.some((t) => t.id === tag.id);
+            if (!filterExists) {
+                return [...prevFilters, tag];
+            }
+            return prevFilters;
+        });
+    };
+
+
     const handleDragEnd = async (event) => {
         const { active, over } = event;
         if (!over) return;
-        if (active && over && active.id !== over.id) {
-            const oldIndex = tasks.findIndex(task => task.id === active.id);
-            const newIndex = tasks.findIndex(task => task.id === over.id);
-            const updatedTasks = [...tasks];
-            const [movedTask] = updatedTasks.splice(oldIndex, 1);
-            updatedTasks.splice(newIndex, 0, movedTask);
-            setTasks(updatedTasks);
-            //Will not persist. Needs a fix later
+        const activeTaskId = active.id;
+        const overTaskId = over.id;
+        const activeTask = tasks.find((task) => task.id === activeTaskId);
+        const overTask = tasks.find((task) => task.id === overTaskId);
+        try {
+            //I had trouble with this by awaiting both sequentially rather than promising them all in succession
+            await Promise.all([
+                editTask(activeTask.id, overTask),
+                editTask(overTask.id, activeTask),
+            ]);
+            await fetchData(setTasks, setTags);
+        } catch (error) {
+            console.error("Error swapping task IDs:", error.message);
+            toast.error("Failed to reorder tasks.");
         }
     };
+
+    const filteredTasks = tasks.filter((task) => {
+        if (tagFilters.length === 0) return true;
+        const taskTagIds = task.tags.split(',').map(Number);
+        return taskTagIds.some((tagId) => tagFilters.includes(tagId));
+    });
 
     return (
         <>
             <div style={{ textAlign: 'center' }}>
                 <h2>Tasks</h2>
             </div>
-            {tasks.length === 0 && (
+            <div style={{marginBottom: '20px'}}>
+                <h3>Filter by tag</h3>
+                {tagFilters.length > 0 && (
+                    <div className="tagRow">
+                        <ShowInsertedTags
+                        tags={tagFilters}
+                        setTags={setTagFilters}
+                        />
+                    </div>
+                )}
+                {tags.map((tag) => (
+                    <button key={tag.id} onClick={() => addTagFilters(tag.id)}>
+                        {tag.name}
+                    </button>
+                ))}
+            </div>
+            {filteredTasks.length === 0 && (
                 <h1>No tasks found</h1>
             )}
             <DndContext
@@ -78,11 +125,11 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 onDragEnd={handleDragEnd}
             >
                 <SortableContext
-                    items={tasks.map((task) => task.id)}
+                    items={filteredTasks.map((task) => task.id)}
                     strategy={rectSortingStrategy}
                 >
-                <div className="task-container">
-                    {tasks.map((task) => (
+                <div className="taskContainer">
+                    {filteredTasks.map((task) => (
                         taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFD700">
                             <div key={task.id}>
@@ -115,10 +162,6 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                             </SortableTask>
                         ) : (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
-                                    {/* The BG color could be decided by the user at some point.
-                                    Maybe in the additional data of the task? For tag colors,
-                                    I really dont have a clue since they dont have an additional
-                                    id or a datatype you could store. They only have a name and id*/}
                                 <p className="nameContainer">Name: <strong>{task.name}</strong></p>
                                 <p className="nameContainer">Tags: <strong>{task.tagNames}</strong></p>
                                 <div className="manipulateBar">

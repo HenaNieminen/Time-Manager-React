@@ -26,7 +26,7 @@ const TaskWindow = () => {
 
     return (
         <>
-            <div className="window-row">
+            <div className="windowRow">
                 <div>
                     {/*Agressive amounts of prop drilling. Yummy!*/}
                     <TaskView
@@ -37,7 +37,7 @@ const TaskWindow = () => {
                     />
                 </div>
             </div>
-            <div className="window-row">
+            <div className="windowRow">
                 {/*Can't get enough of prop drilling! */}
                 <TaskAdder
                 tags={tags}
@@ -46,7 +46,7 @@ const TaskWindow = () => {
                 setTags={setTags}
                 />
             </div>
-            <div className="window-row">
+            <div className="windowRow">
                 <TagAdder
                 tags={tags}
                 setTasks={setTasks}

@@ -1,9 +1,12 @@
-.task-container {
+//This will need a better solution. Buggy as fuck
+
+.taskContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 16px;
     padding: 16px;
     overflow-y: scroll;
+    overflow-x: hidden;
     scrollbar-width: none;
     max-height: calc(35vh + 50px);
     max-width: calc(40vw + 100px);
@@ -26,14 +29,17 @@
     border-radius: 5px;
 
     p {
-        overflow: wrap;
-        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: wrap;
+        max-width: 225px;
     }
 
     &:active {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        cursor: grabbing;
     }
+
+    button {}
 }
 
 .manipulateBar {
@@ -41,7 +47,7 @@
     flex-direction: row;
 }
 
-.drag-handle {
+.dragHandle {
     cursor: grab;
     padding: 4px;
     background: #ddd;
@@ -53,15 +59,21 @@
     }
 }
 
+@media screen and (min-width: 1200px) {
+    .taskContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
-@media screen and (min-width: 768px) {
-    .task-container {
+
+@media screen and (min-width: 1750px) {
+    .taskContainer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
-@media screen and (min-width: 1200px) {
-    .task-container {
+@media screen and (min-width: 2000px) {
+    .taskContainer {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }

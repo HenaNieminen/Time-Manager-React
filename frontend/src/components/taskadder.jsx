@@ -32,6 +32,11 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
         await fetchData(setTasks, setTags);
     };
     const adjustTag = async (id) => {
+        if (editedTag.length === 0) {
+            toast.error('Tag name cannot be empty!');
+            setTagEditMode(null);
+            return;
+        }
         const originalTag = tags.find((tag) => tag.id === id);
         if (originalTag.name !== editedTag) {
             const isDuplicate = await checkDuplicates(tasks, editedTag);
@@ -40,8 +45,11 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                 return;
             }
         }
-        await editTag(id, editedTag);
+        //Combine the editedTag value with the ID to send it to the backend properly
+        const newTag = { id, name: editedTag };
+        await editTag(id, newTag);
         await fetchData(setTasks, setTags);
+        setTagEditMode(null);
     }
     //Add the tag to the task if it hasn't been placed. Otherwise igonre
     const tagButtonClickForAdding = (tag) => {
@@ -58,13 +66,6 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             setTagEditMode(null);
         }
         setTagDeleteMode((prevMode) => !prevMode);
-    };
-
-    const toggleEditMode = () => {
-        if (tagDeleteMode) {
-            setTagDeleteMode(null);
-        }
-        setTagEditMode((prevMode) => !prevMode);
     };
 
     return (
@@ -89,32 +90,56 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     />
                 </div>
             )}
-
-                <div className="tagRow" >
-                    {tags.map((tag) => (
-                        <div key={tag.id}>
-                            <button onClick={() => tagButtonClickForAdding(tag)}>
-                                {tag.name}
-                            </button>
-                            {tagDeleteMode && (
-                                <button onClick={() => deleteTag(tag.id, tasks)}>x</button>
-                            )}
-                        </div>
-                    ))}
-                </div>
+            <div className="tagRow">
+                {tags.map((tag) => (
+                    <div key={tag.id}>
+                        {tagEditMode === tag.id ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={editedTag}
+                                    onChange={(e) => setEditedTag(e.target.value)}
+                                />
+                                <button onClick={() => adjustTag(tag.id)}>Save</button>
+                                <button onClick={() => setTagEditMode(null)}>Cancel</button>
+                            </>
+                        ) : (
+                            <>
+                                <button onClick={() => tagButtonClickForAdding(tag)}>
+                                    {tag.name}
+                                </button>
+                                {tagEditMode && (
+                                    <button
+                                        onClick={() => {
+                                            setTagEditMode(tag.id);
+                                            setEditedTag(tag.name);
+                                        }}
+                                    >
+                                        Ed.
+                                    </button>
+                                )}
+                                {tagDeleteMode && (
+                                    <button onClick={() => deleteTag(tag.id, tasks)}>x</button>
+                                )}
+                            </>
+                        )}
+                    </div>
+                ))}
+            </div>
             {tags.length > 0 && (
-                <button onClick={toggleDeleteMode}>
-                    {tagDeleteMode ? 'Return' : 'Delete tags'}
-                </button>
-            )}
-            {tags.length > 0 && (
-                <button onClick={toggleEditMode}>
-                    {tagEditMode ? 'Return' : 'Edit tags'}
-                </button>
+                <>
+                    <button onClick={toggleDeleteMode}>
+                        {tagDeleteMode ? 'Return' : 'Delete tags'}
+                    </button>
+                    <button onClick={() => setTagEditMode(tagEditMode ? null : true)}>
+                        {tagEditMode ? 'Return' : 'Edit tags'}
+                    </button>
+                </>
             )}
         </div>
     );
 }
+
 TaskAdder.propTypes = {
     tags: PropTypes.array.isRequired,
     tasks: PropTypes.array.isRequired,
