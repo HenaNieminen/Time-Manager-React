@@ -30,6 +30,7 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
         </div>
     );
 };
+
 TagAdder.propTypes = {
     tags: PropTypes.array.isRequired,
     setTasks: PropTypes.func.isRequired,

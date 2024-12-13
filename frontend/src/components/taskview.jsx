@@ -58,13 +58,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         const { active, over } = event;
         if (!over) return;
         if (active && over && active.id !== over.id) {
-            const oldIndex = tasks.findIndex(task => task.id === active.id);
-            const newIndex = tasks.findIndex(task => task.id === over.id);
-            const updatedTasks = [...tasks];
-            const [movedTask] = updatedTasks.splice(oldIndex, 1);
-            updatedTasks.splice(newIndex, 0, movedTask);
-            setTasks(updatedTasks);
-            //Will not persist. Needs a fix later
+            //Needs a complete rewrite. Seriously wtf is this shit?
         }
     };
 

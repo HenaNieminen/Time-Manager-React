@@ -1,4 +1,5 @@
 import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
+import PropTypes from 'prop-types';
 
 //This code is a bit of a mishmash of your class example and Casmoden solutions example
 export default function SortableTask({ id, children, bg }) {
@@ -18,7 +19,7 @@ export default function SortableTask({ id, children, bg }) {
         transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
         transition: transition || 'transform 50ms ease',
         backgroundColor: bg || "#FFFFFFFF",
-    };
+    }
 
     return (
         /*I had trouble making edit and delete buttons work when taskcards were
@@ -32,3 +33,9 @@ export default function SortableTask({ id, children, bg }) {
         </div>
     );
 }
+
+SortableTask.propTypes = {
+    id: PropTypes.string.isRequired,
+    children: PropTypes.node,
+    bg: PropTypes.string,
+};

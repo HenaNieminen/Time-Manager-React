@@ -129,6 +129,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
         </div>
     );
 }
+
 TaskAdder.propTypes = {
     tags: PropTypes.array.isRequired,
     tasks: PropTypes.array.isRequired,

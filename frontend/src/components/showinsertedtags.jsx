@@ -20,7 +20,7 @@ const ShowInsertedTags = ({ tags, setTags, }) => {
         </div>
     );
 };
-//Prop validation. Eslint keeps nagging about it if you don't have prop validation
+
 ShowInsertedTags.propTypes = {
     tags: PropTypes.array.isRequired,
     setTags: PropTypes.func.isRequired,
