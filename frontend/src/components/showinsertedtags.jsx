@@ -5,7 +5,6 @@ from adding or editing and will remove the tag from insertion if clicked */
 const ShowInsertedTags = ({ tags, setTags, }) => {
     return (
         <div>
-            <h4>Inserted tags</h4>
             {tags.map((tag, index) => (
                 <button
                     key={index}

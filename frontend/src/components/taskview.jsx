@@ -42,9 +42,13 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     //Add the tag to a task if it has not been previously placed. Ignore if it's already there
     const tagButtonClickForEditing = (tag) => {
         setEditedTags((prevTags) => {
-            if (!prevTags.includes(tag)) {
+            //Check if the tag exists with the some function
+            const tagExists = prevTags.some((t) => t.id === tag.id);
+            //If not true
+            if (!tagExists) {
                 return [...prevTags, tag];
             }
+            //If true, will not return the duplicate
             return prevTags;
         });
     };
@@ -56,7 +60,8 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
 
     const addTagFilters = (tag) => {
         setTagFilters((prevFilters) => {
-            if (!prevFilters.includes(tag)) {
+            const filterExists = prevFilters.some((t) => t.id === tag.id);
+            if (!filterExists) {
                 return [...prevFilters, tag];
             }
             return prevFilters;
@@ -97,12 +102,14 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             </div>
             <div style={{marginBottom: '20px'}}>
                 <h3>Filter by tag</h3>
-                <div className="tagRow">
-                    <ShowInsertedTags
-                    tags={tagFilters}
-                    setTags={setTagFilters}
-                    />
-                </div>
+                {tagFilters.length > 0 && (
+                    <div className="tagRow">
+                        <ShowInsertedTags
+                        tags={tagFilters}
+                        setTags={setTagFilters}
+                        />
+                    </div>
+                )}
                 {tags.map((tag) => (
                     <button key={tag.id} onClick={() => addTagFilters(tag.id)}>
                         {tag.name}
