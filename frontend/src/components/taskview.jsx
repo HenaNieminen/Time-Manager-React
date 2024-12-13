@@ -13,7 +13,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
-    //const [sortTags, setSortTags] = useState([]);
+    const [tagFilters, setTagFilters] = useState([]);
 
     //Adjust task data and send the edited data to the backend
     const adjustTask = async (id) => {
@@ -54,11 +54,23 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         useSensor(PointerSensor)
     );
 
+
     const handleDragEnd = async (event) => {
         const { active, over } = event;
         if (!over) return;
-        if (active && over && active.id !== over.id) {
-            //Needs a complete rewrite. Seriously wtf is this shit?
+        const activeTaskId = active.id;
+        const overTaskId = over.id;
+        const activeTask = tasks.find((task) => task.id === activeTaskId);
+        const overTask = tasks.find((task) => task.id === overTaskId);
+        try {
+            await Promise.all([
+                editTask(activeTask.id, overTask),
+                editTask(overTask.id, activeTask),
+            ]);
+            await fetchData(setTasks, setTags);
+        } catch (error) {
+            console.error("Error swapping task IDs:", error.message);
+            toast.error("Failed to reorder tasks.");
         }
     };
 
