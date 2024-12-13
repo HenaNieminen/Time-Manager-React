@@ -90,10 +90,11 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     />
                 </div>
             )}
-                <div className="tagRow" >
-                    {tags.map((tag) => (
-                        tagEditMode === tag.id ? (
-                            <div key={tag.id}>
+            <div className="tagRow">
+                {tags.map((tag) => (
+                    <div key={tag.id}>
+                        {tagEditMode === tag.id ? (
+                            <>
                                 <input
                                     type="text"
                                     value={editedTag}
@@ -101,30 +102,39 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                                 />
                                 <button onClick={() => adjustTag(tag.id)}>Save</button>
                                 <button onClick={() => setTagEditMode(null)}>Cancel</button>
-                            </div>
+                            </>
                         ) : (
-                            <div key={tag.id}>
+                            <>
                                 <button onClick={() => tagButtonClickForAdding(tag)}>
                                     {tag.name}
                                 </button>
-                                {!tagDeleteMode && (
+                                {tagEditMode && (
                                     <button
                                         onClick={() => {
                                             setTagEditMode(tag.id);
                                             setEditedTag(tag.name);
-                                        }}>Edit</button>
+                                        }}
+                                    >
+                                        Ed.
+                                    </button>
                                 )}
                                 {tagDeleteMode && (
                                     <button onClick={() => deleteTag(tag.id, tasks)}>x</button>
                                 )}
-                            </div>
-                        )
-                    ))}
-                </div>
+                            </>
+                        )}
+                    </div>
+                ))}
+            </div>
             {tags.length > 0 && (
-                <button onClick={toggleDeleteMode}>
-                    {tagDeleteMode ? 'Return' : 'Delete tags'}
-                </button>
+                <>
+                    <button onClick={toggleDeleteMode}>
+                        {tagDeleteMode ? 'Return' : 'Delete tags'}
+                    </button>
+                    <button onClick={() => setTagEditMode(tagEditMode ? null : true)}>
+                        {tagEditMode ? 'Return' : 'Edit tags'}
+                    </button>
+                </>
             )}
         </div>
     );
