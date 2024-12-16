@@ -18,10 +18,11 @@ const TaskWindow = () => {
     //Data use states to drill into props
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
+    const [times, setTimes] = useState([]);
 
     useEffect(() => {
         //Fetch all data when component mounts
-        fetchData(setTasks, setTags);
+        fetchData(setTasks, setTags, setTimes);
     }, []);
 
     return (
@@ -32,8 +33,10 @@ const TaskWindow = () => {
                     <TaskView
                     tasks={tasks}
                     tags={tags}
+                    times={times}
                     setTasks={setTasks}
                     setTags={setTags}
+                    setTimes={setTimes}
                     />
                 </div>
             </div>

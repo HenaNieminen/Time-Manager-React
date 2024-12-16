@@ -4,14 +4,16 @@ import { extractTagNames } from './helpers';
 
 
 //For fetching data as a single clump. Cowabunga it is with the prop drilling!
-const fetchData = async (setTasks, setTags) => {
+const fetchData = async (setTasks, setTags, setTimes) => {
     try {
         const fetchedTasks = await fetchTasks();
         const fetchedTags = await fetchTags();
+        const fetchedTimes = await fetchTimes();
         const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
 
         setTasks(tasksWithTags);
         setTags(fetchedTags);
+        setTimes(fetchedTimes);
     } catch (error) {
         toast.error("Failed syncing data:", error.message);
     }

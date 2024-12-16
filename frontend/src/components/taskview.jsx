@@ -10,7 +10,7 @@ import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
 import '../styles/adders.css'
 
-const TaskView = ({ tasks, tags, setTasks, setTags }) => {
+const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
