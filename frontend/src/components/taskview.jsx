@@ -93,7 +93,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
     const filteredTasks = tasks.filter((task) => {
         if (tagFilters.length === 0) return true;
         const taskTagIds = task.tags.split(',').map(Number);
-        return taskTagIds.some((tagId) => tagFilters.includes(tagId));
+        return taskTagIds.some((tagId) => tagFilters.some((filter) => filter.id === tagId));
     });
 
     return (
@@ -105,7 +105,6 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                 <h3>Filter by tag</h3>
                 {tagFilters.length > 0 && (
                     <div className="tagRow">
-                        {/*Buttons show up as small nubs. Absolutely no clue why, works everywhere else */}
                         <ShowInsertedTags
                         tags={tagFilters}
                         setTags={setTagFilters}
@@ -113,7 +112,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                     </div>
                 )}
                 {tags.map((tag) => (
-                    <button key={tag.id} onClick={() => addTagFilters(tag.id)}>
+                    <button key={tag.id} onClick={() => addTagFilters(tag)}>
                         {tag.name}
                     </button>
                 ))}
