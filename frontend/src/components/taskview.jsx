@@ -8,6 +8,7 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
+import '../styles/adders.css'
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
@@ -104,6 +105,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 <h3>Filter by tag</h3>
                 {tagFilters.length > 0 && (
                     <div className="tagRow">
+                        {/*Buttons show up as small nubs. Absolutely no clue why, works everywhere else */}
                         <ShowInsertedTags
                         tags={tagFilters}
                         setTags={setTagFilters}

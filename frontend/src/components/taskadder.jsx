@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
 import '../styles/adders.css'
+import '../styles/taskcards.css';
 
 const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
     //useStates for inserting new tasks or tags
@@ -113,6 +114,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                                         onClick={() => {
                                             setTagEditMode(tag.id);
                                             setEditedTag(tag.name);
+                                            setTagDeleteMode(null);
                                         }}
                                     >
                                         Ed.
@@ -131,7 +133,10 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     <button onClick={toggleDeleteMode}>
                         {tagDeleteMode ? 'Return' : 'Delete tags'}
                     </button>
-                    <button onClick={() => setTagEditMode(tagEditMode ? null : true)}>
+                    <button onClick={() => {
+                        setTagEditMode(tagEditMode ? null : true);
+                        setTagDeleteMode(null);
+                    }}>
                         {tagEditMode ? 'Return' : 'Edit tags'}
                     </button>
                 </>
