@@ -14,4 +14,22 @@
 .adder input {
   padding: 0.5rem;
   font-size: 1rem;
+}
+
+.tagsInserted {
+  padding: 0.1rem;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  max-width: 300px;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+.tagsInserted::-webkit-scrollbar {
+  display: none;
+}
+.tagsInserted button {
+  font-size: 1rem;
 }/*# sourceMappingURL=adders.css.map */

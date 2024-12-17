@@ -5,7 +5,7 @@ const InfoPage = () => {
 
     return (
     <>
-        <div className="windowColumn">
+        <div className="settingsWindow">
             <h1>About the Application</h1>
             <h2>Author: Henri Nieminen</h2>
             <div className="textContainer">

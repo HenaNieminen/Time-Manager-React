@@ -17,4 +17,22 @@
     }
 }
 
-.tagsInserted {}
+.tagsInserted {
+    padding: 0.1rem;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    max-width: 300px;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    button {
+        font-size: 0.7rem;
+    }
+}

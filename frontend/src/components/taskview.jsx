@@ -104,7 +104,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
             <div style={{marginBottom: '20px'}}>
                 <h3>Filter by tag</h3>
                 {tagFilters.length > 0 && (
-                    <div className="tagRow">
+                    <div className="tagsInserted">
                         <ShowInsertedTags
                         tags={tagFilters}
                         setTags={setTagFilters}

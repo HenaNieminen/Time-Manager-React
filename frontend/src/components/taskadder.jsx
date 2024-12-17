@@ -84,15 +84,16 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     setInsertedTasks('');
                     addTask();
                 }}>Add Task</button>
-                {insertedTaskTag.length > 0 && (
-                    <div>
-                        <ShowInsertedTags
-                            tags={insertedTaskTag}
-                            setTags={setInsertedTaskTag}
-                        />
-                    </div>
-                )}
             </div>
+            {insertedTaskTag.length > 0 && (
+                <div className="tagsInserted">
+                    <h4>Inserted tasks:</h4>
+                    <ShowInsertedTags
+                        tags={insertedTaskTag}
+                        setTags={setInsertedTaskTag}
+                    />
+                </div>
+            )}
             <div className="tagRow">
                 {tags.map((tag) => (
                     <div key={tag.id}>

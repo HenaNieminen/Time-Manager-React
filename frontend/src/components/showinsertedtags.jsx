@@ -9,11 +9,12 @@ const ShowInsertedTags = ({ tags, setTags, }) => {
                 <button
                     key={index}
                     onClick={() => {
+                        //To remove tags from the insertion
                         const updatedTags = tags.filter((t) => t !== tag);
                         setTags(updatedTags);
                     }}
                 >
-                    {tag.name}
+                    {tag.name} <span style={{ marginLeft: '5px' }}>X</span>
                 </button>
             ))}
         </div>
