@@ -6,12 +6,12 @@
   overflow-y: auto;
 }
 
-.tagAdder {
+.adder {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.tagAdder input {
+.adder input {
   padding: 0.5rem;
   font-size: 1rem;
 }/*# sourceMappingURL=adders.css.map */

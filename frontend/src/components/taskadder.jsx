@@ -71,26 +71,28 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
 
     return (
         <div>
-            <input
-                type="text"
-                placeholder="Task Name"
-                id="taskName"
-                value={insertedTask}
-                onChange={(e) => setInsertedTasks(e.target.value)}
-            />
-            <button onClick={() => {
-                setInsertedTaskTag([]);
-                setInsertedTasks('');
-                addTask();
-            }}>Add Task</button>
-            {insertedTaskTag.length > 0 && (
-                <div>
-                    <ShowInsertedTags
-                        tags={insertedTaskTag}
-                        setTags={setInsertedTaskTag}
-                    />
-                </div>
-            )}
+            <div className="adder">
+                <input
+                    type="text"
+                    placeholder="Task Name"
+                    id="taskName"
+                    value={insertedTask}
+                    onChange={(e) => setInsertedTasks(e.target.value)}
+                />
+                <button onClick={() => {
+                    setInsertedTaskTag([]);
+                    setInsertedTasks('');
+                    addTask();
+                }}>Add Task</button>
+                {insertedTaskTag.length > 0 && (
+                    <div>
+                        <ShowInsertedTags
+                            tags={insertedTaskTag}
+                            setTags={setInsertedTaskTag}
+                        />
+                    </div>
+                )}
+            </div>
             <div className="tagRow">
                 {tags.map((tag) => (
                     <div key={tag.id}>

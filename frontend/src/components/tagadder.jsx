@@ -19,7 +19,7 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
     };
 
     return (
-        <div className="tagAdder">
+        <div className="adder">
             <input
                 type="text"
                 placeholder="Tag name"

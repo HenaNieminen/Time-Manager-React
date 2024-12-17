@@ -6,7 +6,7 @@
     overflow-y: auto;
 }
 
-.tagAdder {
+.adder {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -15,6 +15,6 @@
         padding: 0.5rem;
         font-size: 1rem;
     }
-
-    button {}
 }
+
+.tagsInserted {}
