@@ -20,7 +20,7 @@ const InfoPage = () => {
                 </p>
                 <p>AI tools (GitHub Copilot) have mainly been used to solve small problems
                     when a straightforward answer could not be found through web searches. (Mainly button functions and getting some parts of logic done.
-                    Attribution will be given when used to an extended degree)
+                    Attribution will be given when used)
                     Casmoden Solutions on youtube is also a good source for learning stuff.
                     <a href="https://www.youtube.com/@cosdensolutions" target="_blank" rel="noopener noreferrer">https://www.youtube.com/@cosdensolutions</a>
                     This mostly applies to useContext. I went too far with prop drilling the task function

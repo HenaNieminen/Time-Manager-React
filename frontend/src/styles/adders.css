@@ -4,4 +4,14 @@
   flex-wrap: wrap;
   max-width: 300px;
   overflow-y: auto;
+}
+
+.tagAdder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.tagAdder input {
+  padding: 0.5rem;
+  font-size: 1rem;
 }/*# sourceMappingURL=adders.css.map */

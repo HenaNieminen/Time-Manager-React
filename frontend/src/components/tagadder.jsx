@@ -3,6 +3,7 @@ import { fetchData } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import '../styles//adders.css'
 
 const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');
@@ -18,7 +19,7 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
     };
 
     return (
-        <div>
+        <div className="tagAdder">
             <input
                 type="text"
                 placeholder="Tag name"

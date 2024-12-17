@@ -38,7 +38,7 @@ p {
     padding: 10px;
 }
 
-.windowRow {
+.windowdivs {
     display: flex;
     gap: 100px;
     min-width: calc(100px + 25vw);
@@ -46,7 +46,7 @@ p {
     margin: calc(5px + 2%);
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .windowColumn {
@@ -62,4 +62,10 @@ p {
 
 .textContainer {
     max-width: calc(30vw + 50px);
+}
+
+@media screen and (min-width: 1200px) {
+    .windowdivs {
+        flex-direction: row;
+    }
 }

@@ -32,13 +32,13 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
         }
         const tagId = editedTags.map((tag) => tag.id);
         await editTask(id, { name: editedTask, tags: tagId });
-        await fetchData(setTasks, setTags);
+        await fetchData(setTasks, setTags, setTimes);
         setTaskEditMode(null);
     };
     //Delete the task from the database
     const deleteTask = async (id) => {
         await removeTask(id);
-        await fetchData(setTasks, setTags);
+        await fetchData(setTasks, setTags, setTimes);
     };
     //Add the tag to a task if it has not been previously placed. Ignore if it's already there
     const tagButtonClickForEditing = (tag) => {
@@ -83,13 +83,13 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                 editTask(activeTask.id, overTask),
                 editTask(overTask.id, activeTask),
             ]);
-            await fetchData(setTasks, setTags);
+            await fetchData(setTasks, setTags, setTimes);
         } catch (error) {
             console.error("Error swapping task IDs:", error.message);
             toast.error("Failed to reorder tasks.");
         }
     };
-
+    //Refactor this. It doesnt make any sense
     const filteredTasks = tasks.filter((task) => {
         if (tagFilters.length === 0) return true;
         const taskTagIds = task.tags.split(',').map(Number);
