@@ -85,7 +85,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
         //Set the updatedTasks as the new state
         setTasks(updatedTasks);
         try {
-            // Sync the new task order with the backend
+            //Sync the new task order with the backend
             await Promise.all([
                 editTask(activeTaskId, overTask),
                 editTask(overTaskId, activeTask),
