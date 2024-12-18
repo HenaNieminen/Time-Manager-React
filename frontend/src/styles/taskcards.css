@@ -9,7 +9,7 @@
   max-height: calc(35vh + 50px);
   max-width: calc(45vw + 100px);
   /*To disable scrollbar. There will be enough visual context to see
-  if it overflows and user should see that*/
+  if it overflows and will still be scrollable*/
 }
 .taskContainer::-webkit-scrollbar {
   display: none;
@@ -39,6 +39,7 @@
 .manipulateBar {
   display: flex;
   flex-direction: row;
+  padding: 10px;
 }
 
 .dragHandle {

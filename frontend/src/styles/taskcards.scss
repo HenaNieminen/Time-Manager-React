@@ -12,7 +12,7 @@
     max-width: calc(45vw + 100px);
 
     /*To disable scrollbar. There will be enough visual context to see
-    if it overflows and user should see that*/
+    if it overflows and will still be scrollable*/
     &::-webkit-scrollbar {
         display: none;
     }
@@ -51,6 +51,7 @@
 .manipulateBar {
     display: flex;
     flex-direction: row;
+    padding: 10px;
 }
 
 .dragHandle {

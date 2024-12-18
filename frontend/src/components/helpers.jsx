@@ -83,6 +83,7 @@ const extractTagNames = (tasks, tags) => {
     return tasks;
 }
 
+//Refactor
 const extractSingularTags = (tags, allTags) => {
     return tags
         .split(',')

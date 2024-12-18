@@ -11,6 +11,7 @@
 }
 .tagRow button {
   font-size: 1rem;
+  margin: 2px;
 }
 
 .adder {
@@ -38,5 +39,6 @@
   display: none;
 }
 .tagsInserted button {
-  font-size: 0.7rem;
+  margin: 2px;
+  font-size: 1rem;
 }/*# sourceMappingURL=tags.css.map */

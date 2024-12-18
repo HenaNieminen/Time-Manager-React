@@ -142,11 +142,13 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                         taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
                             <div key={task.id}>
-                                <input
-                                    type="text"
-                                    defaultValue={task.name}
-                                    onChange={(e) => setEditedTask(e.target.value)}
-                                />
+                                <div className='adder'>
+                                    <input
+                                        type="text"
+                                        defaultValue={task.name}
+                                        onChange={(e) => setEditedTask(e.target.value)}
+                                    />
+                                </div>
                                 {editedTags.length > 0 && (
                                     <div className="tagsInserted">
                                         <ShowInsertedTags
@@ -155,7 +157,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                                         />
                                     </div>
                                 )}
-                                <div>
+                                <div className='tagRow'>
                                     {tags.map((tag) => (
                                         <button key={tag.id}
                                             onClick={() => tagButtonClickForEditing(tag)}>

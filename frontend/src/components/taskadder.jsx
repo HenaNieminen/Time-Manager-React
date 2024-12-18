@@ -132,7 +132,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                 ))}
             </div>
             {tags.length > 0 && (
-                <>
+                <div className="manipulateBar" >
                     <button onClick={toggleDeleteMode}>
                         {tagDeleteMode ? 'Return' : 'Delete tags'}
                     </button>
@@ -142,7 +142,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                     }}>
                         {tagEditMode ? 'Return' : 'Edit tags'}
                     </button>
-                </>
+                </div>
             )}
         </div>
     );
