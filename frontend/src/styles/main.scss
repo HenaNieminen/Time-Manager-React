@@ -6,6 +6,7 @@ body {
     background-color: silver;
 }
 
+//Set all text elements to use Roboto
 h1,
 h2,
 h3,
@@ -14,12 +15,14 @@ p {
     font-family: "Roboto";
 }
 
+//Placements for the link buttons
 .navBar {
     display: flex;
     justify-content: center;
     flex-direction: row;
 }
 
+//Settings for the react link buttons
 .navButton {
     margin: 10px;
     background-color: black;
@@ -30,6 +33,7 @@ p {
     font-family: "Roboto";
 }
 
+//Placements for the info page
 .infoDiv {
     display: flex;
     justify-content: center;
@@ -38,6 +42,7 @@ p {
 
 }
 
+//Frontpage div settings. Column flex mode for mobile
 .windowdivs {
     display: flex;
     gap: 50px;
@@ -49,10 +54,12 @@ p {
     flex-direction: column;
 }
 
+//Textcontainer width settings
 .textContainer {
     max-width: calc(30vw + 50px);
 }
 
+//Switch to row on desktops
 @media screen and (min-width: 1200px) {
     .windowdivs {
         flex-direction: row;

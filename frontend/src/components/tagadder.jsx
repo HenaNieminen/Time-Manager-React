@@ -8,6 +8,7 @@ import '../styles/tags.css'
 const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');
 
+    //Add tag to the database if it doesnt exist yet
     const addTag = async () => {
         const isDuplicate = checkDuplicates(tags, addedTag);
         if (isDuplicate) {

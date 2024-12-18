@@ -61,7 +61,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             return prevTags;
         });
     };
-
+    //Set mode on for tag deletion
     const toggleDeleteMode = () => {
         if (tagEditMode) {
             setTagEditMode(null);

@@ -150,5 +150,3 @@ export { postTasks,
         fetchData,
         fetchTimeData
     };
-/*11 FUNCTIONS!!!
-To be fair, these are meant for general use anyhow by other components*/

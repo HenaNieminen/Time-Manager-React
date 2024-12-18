@@ -1,3 +1,4 @@
+//Gives tags a clear row and size for mobile
 .tagRow {
     display: flex;
     flex-direction: row;
@@ -15,6 +16,7 @@
     }
 }
 
+//Settings for task and tag addition
 .adder {
     display: flex;
     flex-direction: row;
@@ -26,6 +28,7 @@
     }
 }
 
+//Gives inserted tags a clear zone to diffrenciate from others
 .tagsInserted {
     padding: 0.1rem;
     border-color: black;

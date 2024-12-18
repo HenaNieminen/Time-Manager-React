@@ -19,6 +19,7 @@
 }
 
 .sortableTask {
+    //Settings for the task cards. Gives rounding and general elements
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,8 +29,10 @@
     min-width: 250px;
     min-height: 200px;
     max-width: 400px;
+    //Set height minimums and maximums
     border-radius: 5px;
 
+    //To avoid text elements from inside overflowing out
     p {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -37,6 +40,7 @@
         max-width: 225px;
     }
 
+    //Add a slight shadow when the task is moved around
     &:active {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -50,6 +54,7 @@
 }
 
 .dragHandle {
+    //Settings for task card dragHandle
     cursor: grab;
     padding: 4px;
     background: #ddd;
@@ -62,6 +67,8 @@
 }
 
 @media screen and (min-width: 1200px) {
+
+    //2 columns for laptop
     .taskContainer {
         grid-template-columns: 1fr 1fr;
     }
@@ -69,12 +76,16 @@
 
 
 @media screen and (min-width: 1750px) {
+
+    //3 columns for desktop
     .taskContainer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media screen and (min-width: 2000px) {
+
+    //4 columns for even bigger desktop
     .taskContainer {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }

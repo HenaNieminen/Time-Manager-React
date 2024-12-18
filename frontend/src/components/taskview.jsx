@@ -40,53 +40,59 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
         await removeTask(id);
         await fetchData(setTasks, setTags, setTimes);
     };
-    //Add the tag to a task if it has not been previously placed. Ignore if it's already there
-    const tagButtonClickForEditing = (tag) => {
-        setEditedTags((prevTags) => {
-            //Check if the tag exists with the some function
+    //Add the tag to the state if its not previously there
+    const handleTagClick = (tag, setTagsFunction) => {
+        setTagsFunction((prevTags) => {
             const tagExists = prevTags.some((t) => t.id === tag.id);
-            //If not true
             if (!tagExists) {
                 return [...prevTags, tag];
             }
-            //If true, will not return the duplicate
             return prevTags;
         });
     };
-
+    //Tag click for editing a task
+    const tagButtonClickForEditing = (tag) => {
+        handleTagClick(tag, setEditedTags);
+    };
+    //Tag click for adding filters
+    const addTagFilters = (tag) => {
+        handleTagClick(tag, setTagFilters);
+    };
+    //Sensors for drag and drop
     const sensors = useSensors(
-        //Use the mouse sensor primarily
+        //Use the mouse sensor to control the task cards
         useSensor(PointerSensor)
     );
-
-    const addTagFilters = (tag) => {
-        setTagFilters((prevFilters) => {
-            const filterExists = prevFilters.some((t) => t.id === tag.id);
-            if (!filterExists) {
-                return [...prevFilters, tag];
-            }
-            return prevFilters;
-        });
-    };
-
 
     const handleDragEnd = async (event) => {
         const { active, over } = event;
         if (!over) return;
+        //Define the active and over IDs
         const activeTaskId = active.id;
         const overTaskId = over.id;
+        //Find the whole tasks
         const activeTask = tasks.find((task) => task.id === activeTaskId);
         const overTask = tasks.find((task) => task.id === overTaskId);
+
+        /*Do a switcheroo on the tasks and swap their order by returning the opposites
+        when their ID shows up. Otherwise keep the same order and just return the task
+        for the new updatedTasks state */
+        const updatedTasks = tasks.map((task) => {
+            if (task.id === activeTaskId) return overTask;
+            if (task.id === overTaskId) return activeTask;
+            return task;
+        });
+        //Set the updatedTasks as the new state
+        setTasks(updatedTasks);
         try {
-            //I had trouble with this by awaiting both sequentially rather than promising them all in succession
+            // Sync the new task order with the backend
             await Promise.all([
-                editTask(activeTask.id, overTask),
-                editTask(overTask.id, activeTask),
+                editTask(activeTaskId, overTask),
+                editTask(overTaskId, activeTask),
             ]);
             await fetchData(setTasks, setTags, setTimes);
         } catch (error) {
             console.error("Error swapping task IDs:", error.message);
-            toast.error("Failed to reorder tasks.");
         }
     };
     //Refactor this. It doesnt make any sense
