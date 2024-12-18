@@ -30,9 +30,16 @@ p {
   font-family: "Roboto";
 }
 
+.infoDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .windowdivs {
   display: flex;
-  gap: 100px;
+  gap: 50px;
   min-width: calc(100px + 25vw);
   max-width: 100vw;
   margin: calc(5px + 1%);

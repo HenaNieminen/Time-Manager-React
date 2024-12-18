@@ -4,7 +4,7 @@ import { fetchData, removeTag, editTag } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
-import '../styles/adders.css'
+import '../styles/tags.css'
 import '../styles/taskcards.css';
 
 const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
@@ -87,7 +87,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             </div>
             {insertedTaskTag.length > 0 && (
                 <div className="tagsInserted">
-                    <h4>Inserted tasks:</h4>
+                    <h4>Inserted tags:</h4>
                     <ShowInsertedTags
                         tags={insertedTaskTag}
                         setTags={setInsertedTaskTag}

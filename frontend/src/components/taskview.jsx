@@ -8,7 +8,7 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
-import '../styles/adders.css'
+import '../styles/tags.css'
 
 const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
@@ -103,19 +103,21 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
             </div>
             <div style={{marginBottom: '20px'}}>
                 <h3>Filter by tag</h3>
-                {tagFilters.length > 0 && (
-                    <div className="tagsInserted">
-                        <ShowInsertedTags
-                        tags={tagFilters}
-                        setTags={setTagFilters}
-                        />
-                    </div>
-                )}
+                    {tagFilters.length > 0 && (
+                        <div className="tagsInserted">
+                            <ShowInsertedTags
+                            tags={tagFilters}
+                            setTags={setTagFilters}
+                            />
+                        </div>
+                    )}
+                <div className='tagRow'>
                 {tags.map((tag) => (
                     <button key={tag.id} onClick={() => addTagFilters(tag)}>
                         {tag.name}
                     </button>
                 ))}
+                </div>
             </div>
             {filteredTasks.length === 0 && (
                 <h1>No tasks found</h1>
@@ -132,7 +134,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                 <div className="taskContainer">
                     {filteredTasks.map((task) => (
                         taskEditMode === task.id ? (
-                            <SortableTask key={task.id} id={task.id} bg="#FFD700">
+                            <SortableTask key={task.id} id={task.id} bg="#FFF">
                             <div key={task.id}>
                                 <input
                                     type="text"
@@ -140,7 +142,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                                     onChange={(e) => setEditedTask(e.target.value)}
                                 />
                                 {editedTags.length > 0 && (
-                                    <div>
+                                    <div className="tagsInserted">
                                         <ShowInsertedTags
                                             tags={editedTags}
                                             setTags={setEditedTags}

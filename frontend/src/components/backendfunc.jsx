@@ -15,6 +15,7 @@ const fetchData = async (setTasks, setTags) => {
         setTasks(tasksWithTags);
         setTags(fetchedTags);
     } catch (error) {
+        console.error('Error fetching data:', error.message);
         toast.error("Failed syncing data:", error.message);
     }
 };
@@ -24,6 +25,7 @@ const fetchTimeData = async (setTimes) => {
         const fetchedTimes = await fetchTimes();
         setTimes(fetchedTimes);
     } catch (error) {
+        console.error('Error fetching time data:', error.message);
         toast.error("Failed syncing times:", error.message);
     }
 }

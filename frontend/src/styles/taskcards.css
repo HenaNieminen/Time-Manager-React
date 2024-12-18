@@ -8,6 +8,8 @@
   scrollbar-width: none;
   max-height: calc(35vh + 50px);
   max-width: calc(45vw + 100px);
+  /*To disable scrollbar. There will be enough visual context to see
+  if it overflows and user should see that*/
 }
 .taskContainer::-webkit-scrollbar {
   display: none;

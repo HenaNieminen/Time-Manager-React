@@ -3,7 +3,16 @@
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 300px;
-    overflow-y: auto;
+    max-height: 75px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    button {
+        font-size: 1rem;
+    }
 }
 
 .adder {

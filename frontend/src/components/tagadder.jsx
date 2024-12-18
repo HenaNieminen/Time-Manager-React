@@ -3,7 +3,7 @@ import { fetchData } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
-import '../styles//adders.css'
+import '../styles/tags.css'
 
 const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');

@@ -3,7 +3,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   max-width: 300px;
-  overflow-y: auto;
+  max-height: 75px;
+  overflow-y: scroll;
+}
+.tagRow::-webkit-scrollbar {
+  display: none;
+}
+.tagRow button {
+  font-size: 1rem;
 }
 
 .adder {
@@ -31,5 +38,5 @@
   display: none;
 }
 .tagsInserted button {
-  font-size: 1rem;
-}/*# sourceMappingURL=adders.css.map */
+  font-size: 0.7rem;
+}/*# sourceMappingURL=tags.css.map */
