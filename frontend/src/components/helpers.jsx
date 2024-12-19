@@ -80,7 +80,8 @@ const extractTagNames = (tasks, tags) => {
                 }
             }
         }
-        //Join all tagNames into task
+        /*Join all tagNames into task. This may seem inane, but it makes displaying them easier.
+        Don't know a better solution*/
         task.tagNames = tagNames.join(', ');
     }
     return tasks;

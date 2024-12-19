@@ -23,6 +23,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             return;
         }
         const originalTask = tasks.find((task) => task.id === id);
+        //Check duplication. Also ignore duplication if the user wants to just adjust the capitalization
         if (originalTask.name !== editedTask) {
             const isDuplicate = await checkDuplicates(tasks, editedTask);
             if (isDuplicate) {
