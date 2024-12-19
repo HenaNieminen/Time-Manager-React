@@ -203,6 +203,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     );
 };
 
+//Prop validation
 TaskView.propTypes = {
     tasks: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,
