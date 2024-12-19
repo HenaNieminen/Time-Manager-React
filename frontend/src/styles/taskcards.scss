@@ -33,7 +33,10 @@
     //Set height minimums and maximums
     border-radius: 5px;
 
-    //To avoid text elements from inside overflowing out
+    /*To avoid text elements from inside overflowing out.
+    Tasks essentially have no character limits, but users
+    will realize the diminishing returns with this and will result
+    to them splitting up their thoughts and tasks with this style limiter*/
     p {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -45,14 +48,17 @@
     &:active {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
-
-    button {}
 }
 
 .manipulateBar {
     display: flex;
     flex-direction: row;
     padding: 10px;
+
+    button {
+        margin: 2px;
+        font-size: 1rem;
+    }
 }
 
 .dragHandle {
