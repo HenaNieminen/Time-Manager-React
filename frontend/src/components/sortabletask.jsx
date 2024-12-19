@@ -19,6 +19,7 @@ export default function SortableTask({ id, children, bg }) {
         transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
         transition: transition || 'transform 50ms ease',
         backgroundColor: bg || "#FFFFFFFF",
+        //Background color was planned for each task where user could select its color by using the additional_data in tasks
     }
 
     return (

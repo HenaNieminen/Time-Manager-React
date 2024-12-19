@@ -93,7 +93,7 @@ const extractSingularTags = (tags, allTags) => {
         //See which tags match
         return allTags.find((tag) => tag.id === id);
     });
-    //Remove the matched tags
+    //Filters any undefined values out
     const filteredTags = extractedTags.filter((tag) => tag);
     return filteredTags;
 };

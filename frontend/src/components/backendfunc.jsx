@@ -119,7 +119,6 @@ const removeTag = async (tagId) => {
 
 const editTask = async (taskId, updatedTask) => {
     try {
-        console.log(updatedTask);
         await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
     } catch (error) {
         console.error('Error editing task or tags:', error.message);

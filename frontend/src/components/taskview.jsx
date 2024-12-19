@@ -95,11 +95,18 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             console.error("Error swapping task IDs:", error.message);
         }
     };
-    //Refactor this. It doesnt make any sense
+    //Takes the tasks and uses a filter on them
+    /*This required some help from co-pilot to get it right. It suggested
+    this solution by replacing the tasks in the map with the filtered one*/
     const filteredTasks = tasks.filter((task) => {
+        // If no tag filters are selected, show all tasks
         if (tagFilters.length === 0) return true;
+
         const taskTagIds = task.tags.split(',').map(Number);
-        return taskTagIds.some((tagId) => tagFilters.some((filter) => filter.id === tagId));
+        //Return the tesks where the filter matches up
+        return taskTagIds.some((tagId) =>
+            tagFilters.some((filter) => filter.id === tagId)
+        );
     });
 
     return (
