@@ -6,12 +6,13 @@
     gap: 16px;
     padding: 16px;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: visible;
     scrollbar-width: none;
     max-height: calc(35vh + 50px);
-    max-width: calc(45vw + 100px);
+    width: 100%;
 
-    /*To disable scrollbar. There will be enough visual context to see
+    /*To disable the very ugly looking scrollbar.
+    There will be enough visual context to see
     if it overflows and will still be scrollable*/
     &::-webkit-scrollbar {
         display: none;
@@ -67,16 +68,16 @@
     }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 700px) {
 
-    //2 columns for laptop
+    //2 columns for laptops and tablets
     .taskContainer {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 
-@media screen and (min-width: 1750px) {
+@media screen and (min-width: 1200px) {
 
     //3 columns for desktop
     .taskContainer {

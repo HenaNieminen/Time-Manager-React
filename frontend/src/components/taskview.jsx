@@ -10,7 +10,7 @@ import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
 import '../styles/tags.css'
 
-const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
+const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
     const [editedTask, setEditedTask] = useState('');
     const [editedTags, setEditedTags] = useState([]);
@@ -32,13 +32,13 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
         }
         const tagId = editedTags.map((tag) => tag.id);
         await editTask(id, { name: editedTask, tags: tagId });
-        await fetchData(setTasks, setTags, setTimes);
+        await fetchData(setTasks, setTags);
         setTaskEditMode(null);
     };
     //Delete the task from the database
     const deleteTask = async (id) => {
         await removeTask(id);
-        await fetchData(setTasks, setTags, setTimes);
+        await fetchData(setTasks, setTags);
     };
     //Add the tag to the state if its not previously there
     const handleTagClick = (tag, setTagsFunction) => {
@@ -90,7 +90,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                 editTask(activeTaskId, overTask),
                 editTask(overTaskId, activeTask),
             ]);
-            await fetchData(setTasks, setTags, setTimes);
+            await fetchData(setTasks, setTags);
         } catch (error) {
             console.error("Error swapping task IDs:", error.message);
         }
@@ -141,6 +141,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                     {filteredTasks.map((task) => (
                         taskEditMode === task.id ? (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
+                                {/*When task is in edit mode*/ }
                             <div key={task.id}>
                                 <div className='adder'>
                                     <input
@@ -173,6 +174,7 @@ const TaskView = ({ tasks, tags, times, setTasks, setTags, setTimes }) => {
                             </SortableTask>
                         ) : (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
+                                    {/*When task is in idle mode*/}
                                 <p className="nameContainer">Name: <strong>{task.name}</strong></p>
                                 <p className="nameContainer">Tags: <strong>{task.tagNames}</strong></p>
                                 <div className="manipulateBar">

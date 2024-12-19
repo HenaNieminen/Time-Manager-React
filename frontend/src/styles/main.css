@@ -37,7 +37,7 @@ p {
   flex-direction: column;
 }
 
-.windowdivs {
+.windowdivs, .windowColumn {
   display: flex;
   gap: 50px;
   min-width: calc(100px + 25vw);
@@ -48,12 +48,16 @@ p {
   flex-direction: column;
 }
 
+.windowColumn {
+  flex-direction: column !important;
+}
+
 .textContainer {
   max-width: calc(30vw + 50px);
 }
 
 @media screen and (min-width: 1200px) {
-  .windowdivs {
+  .windowdivs, .windowColumn {
     flex-direction: row;
   }
 }/*# sourceMappingURL=main.css.map */

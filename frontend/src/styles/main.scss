@@ -54,6 +54,13 @@ p {
     flex-direction: column;
 }
 
+//For settings and info.
+.windowColumn {
+    @extend .windowdivs;
+    //Ignores the media change
+    flex-direction: column !important;
+}
+
 //Textcontainer width settings
 .textContainer {
     max-width: calc(30vw + 50px);

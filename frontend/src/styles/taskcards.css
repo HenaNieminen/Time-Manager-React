@@ -4,11 +4,12 @@
   gap: 16px;
   padding: 16px;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: visible;
   scrollbar-width: none;
   max-height: calc(35vh + 50px);
-  max-width: calc(45vw + 100px);
-  /*To disable scrollbar. There will be enough visual context to see
+  width: 100%;
+  /*To disable the very ugly looking scrollbar.
+  There will be enough visual context to see
   if it overflows and will still be scrollable*/
 }
 .taskContainer::-webkit-scrollbar {
@@ -53,12 +54,12 @@
   cursor: grabbing;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 700px) {
   .taskContainer {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media screen and (min-width: 1750px) {
+@media screen and (min-width: 1200px) {
   .taskContainer {
     grid-template-columns: 1fr 1fr 1fr;
   }

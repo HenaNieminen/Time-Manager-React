@@ -6,6 +6,7 @@ const SettingsPage = () => {
         <>
         <div className='windowColumn'>
             <Link className='navButton' to="/">Go back</Link>
+            <h1>Not implemented :(</h1>
         </div>
         </>
     );

@@ -87,6 +87,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             </div>
             {insertedTaskTag.length > 0 && (
                 <div className="tagsInserted">
+                    {/*Show inserted tags into a new task*/ }
                     <h4>Inserted tags:</h4>
                     <ShowInsertedTags
                         tags={insertedTaskTag}
@@ -98,6 +99,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                 {tags.map((tag) => (
                     <div key={tag.id}>
                         {tagEditMode === tag.id ? (
+                            //Edit mode inputs
                             <>
                                 <input
                                     type="text"
@@ -108,11 +110,13 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                                 <button onClick={() => setTagEditMode(null)}>Cancel</button>
                             </>
                         ) : (
+                            //Normal mode
                             <>
                                 <button onClick={() => tagButtonClickForAdding(tag)}>
                                     {tag.name}
                                 </button>
                                 {tagEditMode && (
+                                    //Render an edit button
                                     <button
                                         onClick={() => {
                                             setTagEditMode(tag.id);
@@ -120,11 +124,12 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
                                             setTagDeleteMode(null);
                                         }}
                                     >
-                                        Ed.
+                                        ed.
                                     </button>
                                 )}
                                 {tagDeleteMode && (
-                                    <button onClick={() => deleteTag(tag.id, tasks)}>x</button>
+                                    //Render a red delete button in delete mode
+                                    <button onClick={() => deleteTag(tag.id, tasks)} style={{ backgroundColor: "red" }}>X</button>
                                 )}
                             </>
                         )}
@@ -133,6 +138,7 @@ const TaskAdder = ({ tags, tasks, setTasks, setTags }) => {
             </div>
             {tags.length > 0 && (
                 <div className="manipulateBar" >
+                    {/*Tag editing and deleting. Both cannot be on at the same time*/ }
                     <button onClick={toggleDeleteMode}>
                         {tagDeleteMode ? 'Return' : 'Delete tags'}
                     </button>
