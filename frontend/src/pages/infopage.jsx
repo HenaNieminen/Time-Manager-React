@@ -38,7 +38,7 @@ const InfoPage = () => {
                 <p>So far, no licensed materials have been used in this work.
                     Instead of CSS, I have used SCSS, which is an extension of the CSS language
                     and makes it easier to use classes and selectors. React libraries used are toastify,
-                    drag and drop, prop-types,
+                    drag and drop, prop-types and router.
                 </p>
                 <h3>Comments:</h3>
                 <p>
