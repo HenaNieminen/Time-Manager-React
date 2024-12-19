@@ -3,10 +3,12 @@ import { fetchData } from "./backendfunc";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PropTypes from 'prop-types';
+import '../styles/tags.css'
 
 const TagAdder = ({ tags, setTasks, setTags }) => {
     const [addedTag, setAddedTag] = useState('');
 
+    //Add tag to the database if it doesnt exist yet
     const addTag = async () => {
         const isDuplicate = checkDuplicates(tags, addedTag);
         if (isDuplicate) {
@@ -18,7 +20,7 @@ const TagAdder = ({ tags, setTasks, setTags }) => {
     };
 
     return (
-        <div>
+        <div className="adder">
             <input
                 type="text"
                 placeholder="Tag name"

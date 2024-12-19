@@ -8,6 +8,7 @@ import { DndContext, closestCenter, useSensor, useSensors, PointerSensor } from 
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import  SortableTask  from './sortabletask.jsx';
 import '../styles/taskcards.css';
+import '../styles/tags.css'
 
 const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     const [taskEditMode, setTaskEditMode] = useState(null);
@@ -39,60 +40,73 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
         await removeTask(id);
         await fetchData(setTasks, setTags);
     };
-    //Add the tag to a task if it has not been previously placed. Ignore if it's already there
-    const tagButtonClickForEditing = (tag) => {
-        setEditedTags((prevTags) => {
-            //Check if the tag exists with the some function
+    //Add the tag to the state if its not previously there
+    const handleTagClick = (tag, setTagsFunction) => {
+        setTagsFunction((prevTags) => {
             const tagExists = prevTags.some((t) => t.id === tag.id);
-            //If not true
             if (!tagExists) {
                 return [...prevTags, tag];
             }
-            //If true, will not return the duplicate
             return prevTags;
         });
     };
-
+    //Tag click for editing a task
+    const tagButtonClickForEditing = (tag) => {
+        handleTagClick(tag, setEditedTags);
+    };
+    //Tag click for adding filters
+    const addTagFilters = (tag) => {
+        handleTagClick(tag, setTagFilters);
+    };
+    //Sensors for drag and drop
     const sensors = useSensors(
-        //Use the mouse sensor primarily
+        //Use the mouse sensor to control the task cards
         useSensor(PointerSensor)
     );
-
-    const addTagFilters = (tag) => {
-        setTagFilters((prevFilters) => {
-            const filterExists = prevFilters.some((t) => t.id === tag.id);
-            if (!filterExists) {
-                return [...prevFilters, tag];
-            }
-            return prevFilters;
-        });
-    };
-
 
     const handleDragEnd = async (event) => {
         const { active, over } = event;
         if (!over) return;
+        //Define the active and over IDs
         const activeTaskId = active.id;
         const overTaskId = over.id;
+        //Find the whole tasks
         const activeTask = tasks.find((task) => task.id === activeTaskId);
         const overTask = tasks.find((task) => task.id === overTaskId);
+
+        /*Do a switcheroo on the tasks and swap their order by returning the opposites
+        when their ID shows up. Otherwise keep the same order and just return the task
+        for the new updatedTasks state */
+        const updatedTasks = tasks.map((task) => {
+            if (task.id === activeTaskId) return overTask;
+            if (task.id === overTaskId) return activeTask;
+            return task;
+        });
+        //Set the updatedTasks as the new state
+        setTasks(updatedTasks);
         try {
-            //I had trouble with this by awaiting both sequentially rather than promising them all in succession
+            //Sync the new task order with the backend
             await Promise.all([
-                editTask(activeTask.id, overTask),
-                editTask(overTask.id, activeTask),
+                editTask(activeTaskId, overTask),
+                editTask(overTaskId, activeTask),
             ]);
             await fetchData(setTasks, setTags);
         } catch (error) {
             console.error("Error swapping task IDs:", error.message);
-            toast.error("Failed to reorder tasks.");
         }
     };
-
+    //Takes the tasks and uses a filter on them
+    /*This required some help from co-pilot to get it right. It suggested
+    this solution by replacing the tasks in the map with the filtered one*/
     const filteredTasks = tasks.filter((task) => {
+        // If no tag filters are selected, show all tasks
         if (tagFilters.length === 0) return true;
+
         const taskTagIds = task.tags.split(',').map(Number);
-        return taskTagIds.some((tagId) => tagFilters.includes(tagId));
+        //Return the tesks where the filter matches up
+        return taskTagIds.some((tagId) =>
+            tagFilters.some((filter) => filter.id === tagId)
+        );
     });
 
     return (
@@ -102,19 +116,21 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
             </div>
             <div style={{marginBottom: '20px'}}>
                 <h3>Filter by tag</h3>
-                {tagFilters.length > 0 && (
-                    <div className="tagRow">
-                        <ShowInsertedTags
-                        tags={tagFilters}
-                        setTags={setTagFilters}
-                        />
-                    </div>
-                )}
+                    {tagFilters.length > 0 && (
+                        <div className="tagsInserted">
+                            <ShowInsertedTags
+                            tags={tagFilters}
+                            setTags={setTagFilters}
+                            />
+                        </div>
+                    )}
+                <div className='tagRow'>
                 {tags.map((tag) => (
-                    <button key={tag.id} onClick={() => addTagFilters(tag.id)}>
+                    <button key={tag.id} onClick={() => addTagFilters(tag)}>
                         {tag.name}
                     </button>
                 ))}
+                </div>
             </div>
             {filteredTasks.length === 0 && (
                 <h1>No tasks found</h1>
@@ -131,22 +147,25 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                 <div className="taskContainer">
                     {filteredTasks.map((task) => (
                         taskEditMode === task.id ? (
-                            <SortableTask key={task.id} id={task.id} bg="#FFD700">
+                            <SortableTask key={task.id} id={task.id} bg="#FFF">
+                                {/*When task is in edit mode*/ }
                             <div key={task.id}>
-                                <input
-                                    type="text"
-                                    defaultValue={task.name}
-                                    onChange={(e) => setEditedTask(e.target.value)}
-                                />
+                                <div className='adder'>
+                                    <input
+                                        type="text"
+                                        defaultValue={task.name}
+                                        onChange={(e) => setEditedTask(e.target.value)}
+                                    />
+                                </div>
                                 {editedTags.length > 0 && (
-                                    <div>
+                                    <div className="tagsInserted">
                                         <ShowInsertedTags
                                             tags={editedTags}
                                             setTags={setEditedTags}
                                         />
                                     </div>
                                 )}
-                                <div>
+                                <div className='tagRow'>
                                     {tags.map((tag) => (
                                         <button key={tag.id}
                                             onClick={() => tagButtonClickForEditing(tag)}>
@@ -162,6 +181,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
                             </SortableTask>
                         ) : (
                             <SortableTask key={task.id} id={task.id} bg="#FFF">
+                                    {/*When task is in idle mode*/}
                                 <p className="nameContainer">Name: <strong>{task.name}</strong></p>
                                 <p className="nameContainer">Tags: <strong>{task.tagNames}</strong></p>
                                 <div className="manipulateBar">
@@ -183,6 +203,7 @@ const TaskView = ({ tasks, tags, setTasks, setTags }) => {
     );
 };
 
+//Prop validation
 TaskView.propTypes = {
     tasks: PropTypes.array.isRequired,
     tags: PropTypes.array.isRequired,

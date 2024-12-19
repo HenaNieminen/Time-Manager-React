@@ -6,17 +6,21 @@
     gap: 16px;
     padding: 16px;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: visible;
     scrollbar-width: none;
     max-height: calc(35vh + 50px);
-    max-width: calc(40vw + 100px);
+    width: 100%;
 
+    /*To disable the very ugly looking scrollbar.
+    There will be enough visual context to see
+    if it overflows and will still be scrollable*/
     &::-webkit-scrollbar {
         display: none;
     }
 }
 
 .sortableTask {
+    //Settings for the task cards. Gives rounding and general elements
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,9 +29,14 @@
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     min-width: 250px;
     min-height: 200px;
-    max-width: calc(400px + 5vw);
+    max-width: 400px;
+    //Set height minimums and maximums
     border-radius: 5px;
 
+    /*To avoid text elements from inside overflowing out.
+    Tasks essentially have no character limits, but users
+    will realize the diminishing returns with this and will result
+    to them splitting up their thoughts and tasks with this style limiter*/
     p {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -35,19 +44,26 @@
         max-width: 225px;
     }
 
+    //Add a slight shadow when the task is moved around
     &:active {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
-
-    button {}
 }
 
+//Gives a look for all maniplations
 .manipulateBar {
     display: flex;
     flex-direction: row;
+    padding: 10px;
+
+    button {
+        margin: 2px;
+        font-size: 1rem;
+    }
 }
 
 .dragHandle {
+    //Settings for task card dragHandle
     cursor: grab;
     padding: 4px;
     background: #ddd;
@@ -59,20 +75,26 @@
     }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 700px) {
+
+    //2 columns for laptops and tablets
     .taskContainer {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 
-@media screen and (min-width: 1750px) {
+@media screen and (min-width: 1200px) {
+
+    //3 columns for desktop
     .taskContainer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media screen and (min-width: 2000px) {
+
+    //4 columns for even bigger desktop
     .taskContainer {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }

@@ -1,0 +1,58 @@
+//Gives tags a clear row and size for mobile
+.tagRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 300px;
+    max-height: 75px;
+    overflow-y: scroll;
+
+    //Disable scrollbar
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    //Make buttons larger and stick them out from eachother
+    button {
+        font-size: 1rem;
+        margin: 2px;
+    }
+}
+
+//Settings for task and tag addition
+.adder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    //Make input fields larger for mobile
+    input {
+        padding: 0.5rem;
+        font-size: 1rem;
+    }
+}
+
+//Gives inserted tags a clear zone to diffrenciate from others
+.tagsInserted {
+    padding: 0.1rem;
+    border-color: black;
+    border-width: 2px;
+    //Give a distinctive border to separate from insertable tags
+    border-style: solid;
+    border-radius: 8px;
+    max-width: 300px;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: auto;
+
+    //Disanle scrollbar
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    //Make tag buttons bigger and give margins
+    button {
+        margin: 2px;
+        font-size: 1rem;
+    }
+}

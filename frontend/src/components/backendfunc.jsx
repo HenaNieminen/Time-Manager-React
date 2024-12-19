@@ -9,13 +9,26 @@ const fetchData = async (setTasks, setTags) => {
         const fetchedTasks = await fetchTasks();
         const fetchedTags = await fetchTags();
         const tasksWithTags = extractTagNames(fetchedTasks, fetchedTags);
-
+        /*The reason why I am doing this is to get the tag names properly applied to tasks.
+        there probably is a better way of doing this, but I'm now too far into making it
+        this way*/
         setTasks(tasksWithTags);
         setTags(fetchedTags);
     } catch (error) {
+        console.error('Error fetching data:', error.message);
         toast.error("Failed syncing data:", error.message);
     }
 };
+
+const fetchTimeData = async (setTimes) => {
+    try {
+        const fetchedTimes = await fetchTimes();
+        setTimes(fetchedTimes);
+    } catch (error) {
+        console.error('Error fetching time data:', error.message);
+        toast.error("Failed syncing times:", error.message);
+    }
+}
 
 //Fetch functions
 const fetchTasks = async () => {
@@ -106,7 +119,6 @@ const removeTag = async (tagId) => {
 
 const editTask = async (taskId, updatedTask) => {
     try {
-        console.log(updatedTask);
         await axios.put(`http://127.0.0.1:3010/tasks/${taskId}`, updatedTask);
     } catch (error) {
         console.error('Error editing task or tags:', error.message);
@@ -134,6 +146,6 @@ export { postTasks,
         fetchTimes,
         editTask,
         editTag,
-        fetchData };
-/*11 FUNCTIONS!!!
-To be fair, these are meant for general use anyhow by other components*/
+        fetchData,
+        fetchTimeData
+    };

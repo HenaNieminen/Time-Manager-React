@@ -1,0 +1,44 @@
+.tagRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 300px;
+  max-height: 75px;
+  overflow-y: scroll;
+}
+.tagRow::-webkit-scrollbar {
+  display: none;
+}
+.tagRow button {
+  font-size: 1rem;
+  margin: 2px;
+}
+
+.adder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.adder input {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.tagsInserted {
+  padding: 0.1rem;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  max-width: 300px;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+.tagsInserted::-webkit-scrollbar {
+  display: none;
+}
+.tagsInserted button {
+  margin: 2px;
+  font-size: 1rem;
+}/*# sourceMappingURL=tags.css.map */

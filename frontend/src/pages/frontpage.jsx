@@ -8,11 +8,12 @@ import '../styles/main.css'
 const FrontPage = () => {
     return (
         <>
+        {/*Toastcontainer used here to display toast alerts */}
         <ToastContainer />
-        <h1>Hello. This is still under construction</h1>
         <div className="navBar">
             <Link className="navButton" to="/settings">Settings</Link>
             <Link className="navButton" to="/info">Help/Info</Link>
+                {/*Navigation to other sections*/}
         </div>
         <TaskWindow />
         </>

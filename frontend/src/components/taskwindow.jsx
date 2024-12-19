@@ -1,5 +1,5 @@
 import { useState, useEffect,  } from 'react';
-import { fetchData } from './backendfunc.jsx';
+import { fetchData, fetchTimeData } from './backendfunc.jsx';
 import { TaskView } from './taskview.jsx';
 import { TaskAdder } from './taskadder.jsx';
 import { TagAdder } from './tagadder.jsx';
@@ -18,39 +18,42 @@ const TaskWindow = () => {
     //Data use states to drill into props
     const [tasks, setTasks] = useState([]);
     const [tags, setTags] = useState([]);
+    const [times, setTimes] = useState([]);
 
     useEffect(() => {
         //Fetch all data when component mounts
         fetchData(setTasks, setTags);
+        fetchTimeData(setTimes);
     }, []);
 
     return (
         <>
-            <div className="windowRow">
+            <div className="windowdivs">
                 <div>
                     {/*Agressive amounts of prop drilling. Yummy!*/}
                     <TaskView
                     tasks={tasks}
                     tags={tags}
+                    times={times}
                     setTasks={setTasks}
                     setTags={setTags}
+                    setTimes={setTimes}
                     />
                 </div>
             </div>
-            <div className="windowRow">
+            <div className="windowdivs">
                 {/*Can't get enough of prop drilling! */}
                 <TaskAdder
-                tags={tags}
-                tasks={tasks}
-                setTasks={setTasks}
-                setTags={setTags}
+                    tags={tags}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    setTags={setTags}
                 />
-            </div>
-            <div className="windowRow">
                 <TagAdder
-                tags={tags}
-                setTasks={setTasks}
-                setTags={setTags} />
+                    tags={tags}
+                    setTasks={setTasks}
+                    setTags={setTags}
+                />
             </div>
         </>
     );

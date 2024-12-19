@@ -53,7 +53,10 @@ const removeUndefinedTags = async (id, tasks) => {
     /*Goes through each task, seeing if the deleted tag's id is found and then filters it out.
     The tagids in the task object are in string so that's why it needs conversions*/
     for (const task of tasks) {
-        const updatedTags = task.tags.split(',').filter(tag => tag.trim() !== id.toString()).join(',');
+        const tagIds = task.tags.split(',').map(tag => tag.trim());
+        const updatedTagIds = tagIds.filter(tag => tag !== id.toString());
+        const updatedTags = updatedTagIds.join(',');
+
         if (task.tags !== updatedTags) {
             task.tags = updatedTags;
             await editTask(task.id, task);
@@ -84,11 +87,15 @@ const extractTagNames = (tasks, tags) => {
 }
 
 const extractSingularTags = (tags, allTags) => {
-    return tags
-        .split(',')
-        .map((id) => parseInt(id.trim(), 10))
-        .map((id) => allTags.find((tag) => tag.id === id))
-        .filter((tag) => tag);
+    //Get the tagIds into an array
+    const tagIds = tags.split(',').map((id) => parseInt(id));
+    const extractedTags = tagIds.map((id) => {
+        //See which tags match
+        return allTags.find((tag) => tag.id === id);
+    });
+    //Filters any undefined values out
+    const filteredTags = extractedTags.filter((tag) => tag);
+    return filteredTags;
 };
 
 export { createNewTask,
